@@ -18,112 +18,49 @@ namespace jogoInicial
             do {
                 Random rnd = new();
                 int movimentoAleatorioInimigo = rnd.Next(1,5);
+                int[] variacaoPosicoes = new int[2];
 
-                switch (movimentoAleatorioInimigo)
-                {
-                    case 1:
-                        if(Mapa.mapa[posicaoInimigo[0]-1,posicaoInimigo[1]] == "  "){
-                            limpaLugarAntigoInimigo(posicaoInimigo);
-                            Mapa.mapa[posicaoInimigo[0]-1,posicaoInimigo[1]] = "XX";
-                            isMovimentoInimigoFoiRealizado = true;
+                int variacaoPosicaoZero = movimentoAleatorioInimigo % 2 != 0 
+                    ? movimentoAleatorioInimigo == 1 
+                        ? -1 
+                        : 1 
+                    : 0;
+                    
+                int variacaoPosicaoUm = movimentoAleatorioInimigo % 2 == 0
+                    ? movimentoAleatorioInimigo == 2 
+                        ? -1 
+                        : 1 
+                    : 0;
 
-                        }else if(Mapa.mapa[posicaoInimigo[0]-1,posicaoInimigo[1]] == "{]"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);
-                            ItemDefesa.usandoDefesa = false;
-                            ItemAtaque.nmrPuloAtaqueValido = 0;
+                variacaoPosicoes[0] = posicaoInimigo[0] + variacaoPosicaoZero;
+                variacaoPosicoes[1] = posicaoInimigo[1] + variacaoPosicaoUm;
 
-                        }else if(Mapa.mapa[posicaoInimigo[0]-1,posicaoInimigo[1]] == "{}"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);
-                            ItemAtaque.nmrPuloAtaqueValido = 0;
+                string destino = Mapa.mapa[variacaoPosicoes[0],variacaoPosicoes[1]];
 
-                        }else if(Mapa.mapa[posicaoInimigo[0]-1,posicaoInimigo[1]] == "[]"){
-                            ItemDefesa.usandoDefesa = false;
-                        }else if(Mapa.mapa[posicaoInimigo[0]-1,posicaoInimigo[1]] == "()"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);
-                            Mapa.mapa[posicaoInimigo[0]-1,posicaoInimigo[1]] = "XX";
+                if(destino == "  "){
+                    limpaLugarAntigoInimigo(posicaoInimigo);
+                    Mapa.mapa[variacaoPosicoes[0],variacaoPosicoes[1]] = "XX";
+                    isMovimentoInimigoFoiRealizado = true;
+                }
+                else if(destino == "{]"){
+                    limpaLugarAntigoInimigo(posicaoInimigo);
+                    ItemDefesa.usandoDefesa = false;
+                    ItemAtaque.nmrPuloAtaqueValido = 0;
+                }
+                else if(destino == "{}"){
+                    limpaLugarAntigoInimigo(posicaoInimigo);
+                    ItemAtaque.nmrPuloAtaqueValido = 0;
+                }
+                else if(destino == "[]"){
+                    ItemDefesa.usandoDefesa = false;
+                    Mapa.mapa[variacaoPosicoes[0],variacaoPosicoes[1]] = "()";
+                }
+                else if(destino == "()"){
+                    limpaLugarAntigoInimigo(posicaoInimigo);
+                    Mapa.mapa[variacaoPosicoes[0],variacaoPosicoes[1]] = "XX";
 
-                            Console.WriteLine("Morreu mané");
-                            Environment.Exit(0);
-                        }
-                    break;
-                    case 2:
-                        if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]-1] == "  "){ 
-                            limpaLugarAntigoInimigo(posicaoInimigo);                        
-                            Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]-1] = "XX";
-                            isMovimentoInimigoFoiRealizado = true;
-
-                        }else if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]-1] == "{]"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);
-                            ItemDefesa.usandoDefesa = false;
-                            ItemAtaque.nmrPuloAtaqueValido = 0;
-
-                        }else if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]-1] == "{}"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);     
-                            ItemAtaque.nmrPuloAtaqueValido = 0;                   
-
-                        }else if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]-1] == "[]"){
-                            ItemDefesa.usandoDefesa = false;
-
-                        }else if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]-1] == "()"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);                        
-                            Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]-1] = "XX";
-
-                            Console.WriteLine("Morreu mané");
-                            Environment.Exit(0);
-                        }
-                    break;
-                    case 3:
-                        if(Mapa.mapa[posicaoInimigo[0]+1,posicaoInimigo[1]] == "  "){
-                            limpaLugarAntigoInimigo(posicaoInimigo);                        
-                            Mapa.mapa[posicaoInimigo[0]+1,posicaoInimigo[1]] = "XX";
-                            isMovimentoInimigoFoiRealizado = true;
-                        
-                        }else if(Mapa.mapa[posicaoInimigo[0]+1,posicaoInimigo[1]] == "{]"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);
-                            ItemDefesa.usandoDefesa = false;
-                            ItemAtaque.nmrPuloAtaqueValido = 0;
-
-                        }else if(Mapa.mapa[posicaoInimigo[0]+1,posicaoInimigo[1]] == "{}"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);   
-                            ItemAtaque.nmrPuloAtaqueValido = 0;                     
-                   
-                        }else if(Mapa.mapa[posicaoInimigo[0]+1,posicaoInimigo[1]] == "[]"){
-                            ItemDefesa.usandoDefesa = false;
-
-                        }else if(Mapa.mapa[posicaoInimigo[0]+1,posicaoInimigo[1]] == "()"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);                        
-                            Mapa.mapa[posicaoInimigo[0]+1,posicaoInimigo[1]] = "XX";
-
-                            Console.WriteLine("Morreu mané");
-                            Environment.Exit(0);
-                        }
-                    break;
-                    case 4:
-                        if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]+1] == "  "){  
-                            limpaLugarAntigoInimigo(posicaoInimigo);                        
-                            Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]+1] = "XX";
-                            isMovimentoInimigoFoiRealizado = true;
-
-                        }else if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]+1] == "{]"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);
-                            ItemDefesa.usandoDefesa = false;
-                            ItemAtaque.nmrPuloAtaqueValido = 0;
-
-                        }else if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]+1] == "{}"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);          
-                            ItemAtaque.nmrPuloAtaqueValido = 0;              
-                        
-                        }else if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]+1] == "[]"){
-                           ItemDefesa.usandoDefesa = false;
-
-                        }else if(Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]+1] == "()"){
-                            limpaLugarAntigoInimigo(posicaoInimigo);                        
-                            Mapa.mapa[posicaoInimigo[0],posicaoInimigo[1]+1] = "XX";
-
-                            Console.WriteLine("Morreu mané");
-                            Environment.Exit(0);
-                        }
-                    break;
+                    MostrarMensagem.GameOver();
+                    Environment.Exit(0);
                 }
             } while (!isMovimentoInimigoFoiRealizado);
 

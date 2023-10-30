@@ -1,9 +1,16 @@
 ﻿namespace jogoInicial
 
 {
-    internal class Game
+    public class Game
     {
         public static ConsoleKeyInfo key;
+
+        public enum Direcao {
+            Cima = 1,
+            Esquerda,
+            Baixo,
+            Direita
+        }
 
         static void Main()
         {
@@ -19,16 +26,16 @@
                 key = Console.ReadKey();
 
                 if(key.Key == ConsoleKey.W || key.Key == ConsoleKey.UpArrow){
-                    Personagem.Movimentacao(Mapa.mapa,"W");
+                    Personagem.Movimentacao(Direcao.Cima);
                 }
                 if(key.Key == ConsoleKey.A || key.Key == ConsoleKey.LeftArrow){
-                    Personagem.Movimentacao(Mapa.mapa, "A");
+                    Personagem.Movimentacao(Direcao.Esquerda);
                 }
                 if(key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow){
-                    Personagem.Movimentacao(Mapa.mapa, "S");
+                    Personagem.Movimentacao(Direcao.Baixo);
                 }
                 if(key.Key == ConsoleKey.D || key.Key == ConsoleKey.RightArrow){
-                    Personagem.Movimentacao(Mapa.mapa, "D");
+                    Personagem.Movimentacao(Direcao.Direita);
                 }
                 if(char.IsDigit(key.KeyChar)){
                     Inventario.UsarItem(key.KeyChar);

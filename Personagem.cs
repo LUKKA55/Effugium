@@ -2,216 +2,85 @@ namespace jogoInicial
 {
     public class Personagem
     {
-        public static void Movimentacao(string[,] mapaDefault,string direcao){
+        public static void Movimentacao(Game.Direcao direcao){
             int[] posicao = new int[2];
-            for (int i = 0; i < mapaDefault.GetLength(0); i++){
-                for (int j = 0; j < mapaDefault.GetLength(1); j++){
-                    if(mapaDefault[i,j] == "()" || mapaDefault[i,j] == "{}" || mapaDefault[i,j] == "[]" || mapaDefault[i,j] == "{]"){
+            for (int i = 0; i < Mapa.mapa.GetLength(0); i++){
+                for (int j = 0; j < Mapa.mapa.GetLength(1); j++){
+                    if(Mapa.mapa[i,j] == "()" || Mapa.mapa[i,j] == "{}" || Mapa.mapa[i,j] == "[]" || Mapa.mapa[i,j] == "{]"){
                         posicao[0] = i;
                         posicao[1] = j;
                     }
                 }
             }
-            static string limpaLugarAntigo(int[] posicao, string[,] mapaDefault) => mapaDefault[posicao[0],posicao[1]] = "  ";
-            switch (direcao)
-            {
-                case "W":
-                    if(mapaDefault[posicao[0]-1,posicao[1]] == "  "){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemAtaque.nmrPuloAtaqueValido > 0 && ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0]-1,posicao[1]] = "{]";
-                            ItemAtaque.nmrPuloAtaqueValido--;
+            static string limpaLugarAntigo(int[] posicao) => Mapa.mapa[posicao[0],posicao[1]] = "  ";
 
-                        }else if(ItemAtaque.nmrPuloAtaqueValido > 0){
-                            mapaDefault[posicao[0]-1,posicao[1]] = "{}";
-                            ItemAtaque.nmrPuloAtaqueValido--;
+            int[] variacaoPosicao = new int[2];
 
-                        }else if (ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0]-1,posicao[1]] = "[]";
-                            
-                        }else{
-                            mapaDefault[posicao[0]-1,posicao[1]] = "()";
-                        }
-                    }else if(mapaDefault[posicao[0]-1,posicao[1]] == "<-"){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if (ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0]-1,posicao[1]] = "[]";
-                            
-                        }else{
-                            mapaDefault[posicao[0]-1,posicao[1]] = "()";
-                        }
-                        ItemAtaque.quantidade++;
+            int variacaoPosicaoZero = (int)direcao % 2 != 0 
+                ? (int)direcao == 1 
+                    ? -1 
+                    : 1 
+                : 0;
+                
+            int variacaoPosicaoUm = (int)direcao % 2 == 0
+                ? (int)direcao == 2 
+                    ? -1 
+                    : 1 
+                : 0;
 
-                    }else if(mapaDefault[posicao[0]-1,posicao[1]] == "<>"){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemAtaque.nmrPuloAtaqueValido > 0){
-                            mapaDefault[posicao[0]-1,posicao[1]] = "{}";
-                            ItemAtaque.nmrPuloAtaqueValido--;
+            variacaoPosicao[0] = posicao[0] + variacaoPosicaoZero;
+            variacaoPosicao[1] = posicao[1] + variacaoPosicaoUm;
 
-                        }else{
-                            mapaDefault[posicao[0]-1,posicao[1]] = "()";
-                        }
-                        ItemDefesa.quantidade++;
+            string destino = Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]];
 
-                    }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && mapaDefault[posicao[0]-1,posicao[1]] == "XX"){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        ItemAtaque.nmrPuloAtaqueValido = 0;
-                        if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0]-1,posicao[1]] = "[]";
-                            
-                        }else{
-                            mapaDefault[posicao[0]-1,posicao[1]] = "()";
-                        }
-                    }
-                break;
-                case "A":
-                    if(mapaDefault[posicao[0],posicao[1]-1] == "  "){ 
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemAtaque.nmrPuloAtaqueValido > 0 && ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0],posicao[1]-1] = "{]";
-                            ItemAtaque.nmrPuloAtaqueValido--;
+            if(destino == "  "){
+                limpaLugarAntigo(posicao);
+                if(ItemAtaque.nmrPuloAtaqueValido > 0 && ItemDefesa.usandoDefesa){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "{]";
+                    ItemAtaque.nmrPuloAtaqueValido--;
 
-                        }else if(ItemAtaque.nmrPuloAtaqueValido > 0){
-                            mapaDefault[posicao[0],posicao[1]-1] = "{}";
-                            ItemAtaque.nmrPuloAtaqueValido--;
+                }else if(ItemAtaque.nmrPuloAtaqueValido > 0){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "{}";
+                    ItemAtaque.nmrPuloAtaqueValido--;
 
-                        }else if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0],posicao[1]-1] = "[]";
-
-                        }else{
-                            mapaDefault[posicao[0],posicao[1]-1] = "()";
-                        }
-                    }else if(mapaDefault[posicao[0],posicao[1]-1] == "<-"){ 
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0],posicao[1]-1] = "[]";
-
-                        }else{
-                            mapaDefault[posicao[0],posicao[1]-1] = "()";
-                        }
-                        ItemAtaque.quantidade++;
-
-                    }else if(mapaDefault[posicao[0],posicao[1]-1] == "<>"){ 
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemAtaque.nmrPuloAtaqueValido > 0){
-                            mapaDefault[posicao[0],posicao[1]-1] = "{}";
-                            ItemAtaque.nmrPuloAtaqueValido--;
-
-                        }else{
-                            mapaDefault[posicao[0],posicao[1]-1] = "()";
-                        }
-                        ItemDefesa.quantidade++;
-
-                    }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && mapaDefault[posicao[0],posicao[1]-1] == "XX"){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        ItemAtaque.nmrPuloAtaqueValido = 0;
-                        if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0],posicao[1]-1] = "[]";
-
-                        }else{
-                            mapaDefault[posicao[0],posicao[1]-1] = "()";
-                        }
-                    }
-                break;
-                case "S":
-                    if(mapaDefault[posicao[0]+1,posicao[1]] == "  "){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemAtaque.nmrPuloAtaqueValido > 0  && ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0]+1,posicao[1]] = "{]";
-                            ItemAtaque.nmrPuloAtaqueValido--;
-
-                        }else if(ItemAtaque.nmrPuloAtaqueValido > 0){
-                            mapaDefault[posicao[0]+1,posicao[1]] = "{}";
-                            ItemAtaque.nmrPuloAtaqueValido--;
-
-                        }else if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0]+1,posicao[1]] = "[]";
-
-                        }else{
-                            mapaDefault[posicao[0]+1,posicao[1]] = "()";
-                        }
-                    }else if(mapaDefault[posicao[0]+1,posicao[1]] == "<-"){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0]+1,posicao[1]] = "[]";
-
-                        }else{
-                            mapaDefault[posicao[0]+1,posicao[1]] = "()";
-                        }
-                        ItemAtaque.quantidade++;
+                }else if (ItemDefesa.usandoDefesa){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "[]";
                     
-                    }else if(mapaDefault[posicao[0]+1,posicao[1]] == "<>"){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                          if(ItemAtaque.nmrPuloAtaqueValido > 0){
-                            mapaDefault[posicao[0]+1,posicao[1]] = "{}";
-                            ItemAtaque.nmrPuloAtaqueValido--;
-
-                        }else{
-                            mapaDefault[posicao[0]+1,posicao[1]] = "()";
-                        }
-                        ItemDefesa.quantidade++;
+                }else{
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
+                }
+            }else if(destino == "<-"){
+                limpaLugarAntigo(posicao);
+                if (ItemDefesa.usandoDefesa){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "[]";
                     
-                    }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && mapaDefault[posicao[0]+1,posicao[1]] == "XX"){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        ItemAtaque.nmrPuloAtaqueValido = 0;
-                        if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0]+1,posicao[1]] = "[]";
+                }else{
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
+                }
+                ItemAtaque.quantidade++;
 
-                        }else{
-                            mapaDefault[posicao[0]+1,posicao[1]] = "()";
-                        }
-                    }
-                break;
-                case "D":
-                    if(mapaDefault[posicao[0],posicao[1]+1] == "  "){  
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemAtaque.nmrPuloAtaqueValido > 0 && ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0],posicao[1]+1] = "{]";
-                            ItemAtaque.nmrPuloAtaqueValido--;
+            }else if(destino == "<>"){
+                limpaLugarAntigo(posicao);
+                if(ItemAtaque.nmrPuloAtaqueValido > 0){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "{}";
+                    ItemAtaque.nmrPuloAtaqueValido--;
 
-                        }else if(ItemAtaque.nmrPuloAtaqueValido > 0){
-                            mapaDefault[posicao[0],posicao[1]+1] = "{}";
-                            ItemAtaque.nmrPuloAtaqueValido--;
+                }else{
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
+                }
+                ItemDefesa.quantidade++;
 
-                        }else if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0],posicao[1]+1] = "[]";
-
-                        }else{
-                            mapaDefault[posicao[0],posicao[1]+1] = "()";
-                        }
-                    }else if(mapaDefault[posicao[0],posicao[1]+1] == "<-"){  
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0],posicao[1]+1] = "[]";
-
-                        }else{
-                            mapaDefault[posicao[0],posicao[1]+1] = "()";
-                        }
-                        ItemAtaque.quantidade++;
-
-                    }else if(mapaDefault[posicao[0],posicao[1]+1] == "<>"){  
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        if(ItemAtaque.nmrPuloAtaqueValido > 0){
-                            mapaDefault[posicao[0],posicao[1]+1] = "{}";
-                            ItemAtaque.nmrPuloAtaqueValido--;
-
-                        }else{
-                            mapaDefault[posicao[0],posicao[1]+1] = "()";
-                        }
-                        ItemDefesa.quantidade++;
-
-                    }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && mapaDefault[posicao[0],posicao[1]+1] == "XX"){
-                        limpaLugarAntigo(posicao, mapaDefault);
-                        ItemAtaque.nmrPuloAtaqueValido = 0;
-                        if(ItemDefesa.usandoDefesa){
-                            mapaDefault[posicao[0],posicao[1]+1] = "[]";
-
-                        }else{
-                            mapaDefault[posicao[0],posicao[1]+1] = "()";
-                        }
-                    }
-                break;
+            }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && destino == "XX"){
+                limpaLugarAntigo(posicao);
+                ItemAtaque.nmrPuloAtaqueValido = 0;
+                if(ItemDefesa.usandoDefesa){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "[]";
+                    
+                }else{
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
+                }
             }
+              
             Mapa.CheckMapaIsRenderizando();
         }
     }
