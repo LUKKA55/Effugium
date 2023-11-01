@@ -6,7 +6,7 @@ namespace jogoInicial
             Console.WriteLine("");
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine("-------------------- GAME OVER --------------------");
-            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine("--------------------- Fase {0} --------------------", Game.nivelFase);
             Console.WriteLine("");
         }
     }

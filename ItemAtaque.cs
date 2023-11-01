@@ -7,10 +7,9 @@ namespace jogoInicial
         public static int nmrPuloAtaqueValido = 0;
 
         public static async Task IntervaloVerificaItemAtaque(){
-                Console.WriteLine("Entrou");
-                await Task.Delay(20000);
-                VerificaItemAtaque();
-                await IntervaloVerificaItemAtaque();  
+            await Task.Delay(20000);
+            VerificaItemAtaque();
+            await IntervaloVerificaItemAtaque();  
         }
 
         public static void VerificaItemAtaque(){

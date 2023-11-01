@@ -3,6 +3,8 @@
 {
     public class Game
     {
+
+        public static int nivelFase = 1;
         public static ConsoleKeyInfo key;
 
         public enum Direcao {
