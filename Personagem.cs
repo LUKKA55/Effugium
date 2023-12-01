@@ -70,7 +70,7 @@ namespace jogoInicial
                 }
                 ItemDefesa.quantidade++;
 
-            }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && destino == "XX"){
+            }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && Inimigo.todosTiposInimigo.Find(inimigo => inimigo._aparencia == destino) != null){
                 limpaLugarAntigo(posicao);
                 ItemAtaque.nmrPuloAtaqueValido = 0;
                 if(ItemDefesa.usandoDefesa){

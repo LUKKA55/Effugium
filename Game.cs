@@ -16,6 +16,7 @@
 
         static void Main()
         {
+            Inimigo.IntervaloMovimentoInimigo2();
             Inimigo.IntervaloMovimentoInimigo();
             ItemAtaque.IntervaloVerificaItemAtaque();
 
