@@ -7,7 +7,7 @@ namespace jogoInicial
         public static int nmrPuloAtaqueValido = 0;
 
         public static async Task IntervaloVerificaItemAtaque(){
-            await Task.Delay(20000);
+            await Task.Delay(15000);
             VerificaItemAtaque();
             await IntervaloVerificaItemAtaque();  
         }
@@ -24,13 +24,38 @@ namespace jogoInicial
             }
 
             if(!achouItem && quantidade == 0 && nmrPuloAtaqueValido == 0){
-                if(Mapa.mapa[5,16] == "  "){
-                    Mapa.mapa[5,16] = "<-";
-                }else if(Mapa.mapa[1,1] == "  "){
-                    Mapa.mapa[1,1] = "<-";
-                }else if(Mapa.mapa[5,9] == "  "){
-                    Mapa.mapa[5,9] = "<-";
+                List<List<int>> spawnsDisponiveis = new List<List<int>>{
+                    new List<int>{5, 16}, new List<int>{1, 1}, new List<int>{5, 9}
+                };
+
+                int tentativasDeSpawn = spawnsDisponiveis.Count;
+                
+                for (int c = 0; c < tentativasDeSpawn; c++) {
+                    int randomIndex = new Random().Next(0, spawnsDisponiveis.Count);
+
+                    if(Mapa.mapa[
+                        spawnsDisponiveis.ElementAt(randomIndex).ElementAt(0), 
+                        spawnsDisponiveis.ElementAt(randomIndex).ElementAt(1)
+                    ] == "  "){
+                        Mapa.mapa[
+                            spawnsDisponiveis.ElementAt(randomIndex).ElementAt(0), 
+                            spawnsDisponiveis.ElementAt(randomIndex).ElementAt(1)
+                        ] = "<-";
+                        break;
+
+                    }else if(Personagem.modelosPersonagem.Contains(
+                        Mapa.mapa[
+                            spawnsDisponiveis.ElementAt(randomIndex).ElementAt(0),
+                            spawnsDisponiveis.ElementAt(randomIndex).ElementAt(1)
+                        ]
+                    )){
+                        quantidade +=1;
+                        break;
+                    } else {
+                        spawnsDisponiveis.RemoveAt(randomIndex);
+                    }
                 }
+
                 Mapa.CheckMapaIsRenderizando();
             }
         }

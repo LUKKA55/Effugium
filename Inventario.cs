@@ -2,6 +2,7 @@ namespace jogoInicial
 {
     public class Inventario
     {
+        static public List<string> todosTiposItens= new(){"<>", "<-"}; 
         public static void MostrarInventario(){
             if(ItemAtaque.nmrPuloAtaqueValido > 0){
                 Console.WriteLine("Ataque tem efeito pelos próximos {0} pulos", ItemAtaque.nmrPuloAtaqueValido);

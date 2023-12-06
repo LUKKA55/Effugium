@@ -2,6 +2,7 @@ namespace jogoInicial
 {
     public class Personagem
     {
+        public static string[] modelosPersonagem = { "()", "[]", "{}", "{]" };
         public static void Movimentacao(Game.Direcao direcao){
             int[] posicao = new int[2];
             for (int i = 0; i < Mapa.mapa.GetLength(0); i++){
@@ -70,15 +71,15 @@ namespace jogoInicial
                 }
                 ItemDefesa.quantidade++;
 
-            }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && Inimigo.todosTiposInimigo.Find(inimigo => inimigo._aparencia == destino) != null){
+            }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && Inimigo.todosTiposInimigo.Find(inimigo => inimigo == destino) != null){
+                int tipoInimigo = Inimigo.todosTiposInimigo.FindIndex(inimigo => inimigo == destino) + 1;
+
                 limpaLugarAntigo(posicao);
+                
                 ItemAtaque.nmrPuloAtaqueValido = 0;
-                if(ItemDefesa.usandoDefesa){
-                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "[]";
-                    
-                }else{
-                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
-                }
+                Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = ItemDefesa.usandoDefesa ? "[]" : "()";
+                
+                Game.MatarInimigo((enumInimigos)tipoInimigo);
             }
               
             Mapa.CheckMapaIsRenderizando();
