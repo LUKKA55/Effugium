@@ -7,11 +7,17 @@ namespace jogoInicial
         tipo3
     }
 
+    public enum Direcao {
+        Cima = 1,
+        Esquerda,
+        Baixo,
+        Direita
+    }
+
     public class Game
     {
         public static int nivelFase = 0;
         public static float dificuldade;
-
         public static int qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
         public static int qntInimigosTipo2 = DBFases.mapas[nivelFase]._qntInimigosTipo2;
         public static int qntInimigosTipo3 = DBFases.mapas[nivelFase]._qntInimigosTipo3;
@@ -53,7 +59,7 @@ namespace jogoInicial
             }
         }
 
-        static async Task ProximaFase() {
+        public static async Task ProximaFase() {
             pararRenderizacoes = true;
 
             char[] load = new char[40];
@@ -74,20 +80,13 @@ namespace jogoInicial
             Mapa.MostrarMapa();
         }
 
-        static void Vitoria() {
+        public static void Vitoria() {
             Mapa.MostrarMapa();
             MostrarMensagem.Win();
             Environment.Exit(0);
         }
- 
-        public enum Direcao {
-            Cima = 1,
-            Esquerda,
-            Baixo,
-            Direita
-        }
 
-        static void Main()
+        public static void Main()
         {
             Console.Clear();
             Console.WriteLine("Jogo inicializado");

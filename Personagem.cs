@@ -1,9 +1,10 @@
+
 namespace jogoInicial
 {
     public class Personagem
     {
         public static string[] modelosPersonagem = { "()", "[]", "{}", "{]" };
-        public static void Movimentacao(Game.Direcao direcao){
+        public static void Movimentacao(Direcao direcao){
             int[] posicao = new int[2];
             for (int i = 0; i < Mapa.mapa.GetLength(0); i++){
                 for (int j = 0; j < Mapa.mapa.GetLength(1); j++){

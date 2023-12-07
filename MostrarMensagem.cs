@@ -7,14 +7,18 @@ namespace jogoInicial
             Console.WriteLine("");
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine("-------------------- GAME OVER --------------------");
-            Console.WriteLine("---------------------- Fase {0} ---------------------", Game.nivelFase != 0 ? Game.nivelFase : "INICIAL");
+            Console.WriteLine("---------------------- Fase {0} ---------------------", 
+                Game.nivelFase != 0 
+                    ? Game.nivelFase 
+                    : "INICIAL"
+            );
             Console.WriteLine("");
         }
         public static void NextLevel(){
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("---------------------- NEXT --------------------");
-            Console.WriteLine("----------------------- LEVEL {0} --------------------", Game.nivelFase != 0 ? Game.nivelFase : "INICIAL");
+            Console.WriteLine("----------------------- LEVEL {0} --------------------", Game.nivelFase);
             Console.WriteLine("---------------------    -->    -------------------");
             Console.WriteLine("");
         }
@@ -22,7 +26,11 @@ namespace jogoInicial
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("--------------------- GOOD BYE --------------------");
-            Console.WriteLine("---------------------- FASE {0} ---------------------", Game.nivelFase != 0 ? Game.nivelFase : "INICIAL");
+            Console.WriteLine("---------------------- FASE {0} ---------------------", 
+                Game.nivelFase != 0 
+                    ? Game.nivelFase 
+                    : "INICIAL"
+            );
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine("");
         }
@@ -35,7 +43,6 @@ namespace jogoInicial
             Console.WriteLine("");
         }
         public static void Start(){
-            // Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("-------------- SELECT A DIFFICULTY ----------------");
             Console.WriteLine("------------ EASY -- MEDIUM -- HARD ---------------");
