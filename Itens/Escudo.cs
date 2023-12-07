@@ -1,17 +1,18 @@
 namespace jogoInicial
 {
-    public class ItemDefesa
+    public class Escudo
     {
         public static int quantidade = 0;
-
         public static bool usandoDefesa = false;
-        public static async Task IntervaloVerificaItemDefesa(){
+        public static async Task IntervaloVerificaEscudo(int faseAtual){
             await Task.Delay(20000);
-            VerificaItemDefesa();
-            await IntervaloVerificaItemDefesa();  
+            if (faseAtual != Game.nivelFase) return;
+
+            VerificaEscudo();
+            await IntervaloVerificaEscudo(faseAtual);  
         }
 
-        public static void VerificaItemDefesa(){
+        public static void VerificaEscudo(){
             bool achouItem = false;
 
             for (int i = 0; i < Mapa.mapa.GetLength(0); i++){

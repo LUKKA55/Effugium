@@ -1,6 +1,7 @@
 ﻿using System;
 namespace jogoInicial
 {
+
     public enum enumInimigos {
         tipo1 = 1,
         tipo2,
@@ -16,11 +17,13 @@ namespace jogoInicial
 
     public class Game
     {
-        public static int nivelFase = 0;
+        public static int nivelFase = 7;
+        // Nivel Fase deve ficar em 0, esta assim para testes
         public static float dificuldade;
         public static int qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
         public static int qntInimigosTipo2 = DBFases.mapas[nivelFase]._qntInimigosTipo2;
         public static int qntInimigosTipo3 = DBFases.mapas[nivelFase]._qntInimigosTipo3;
+        public static int qntInimigosTipo5 = DBFases.mapas[nivelFase]._modoFuga ? 1 : 0;
         public static ConsoleKeyInfo key;
 
         public static bool pararRenderizacoes = false;
@@ -44,7 +47,8 @@ namespace jogoInicial
             bool todosInimigoMortos = new List<int>{ 
                 qntInimigosTipo1, 
                 qntInimigosTipo2, 
-                qntInimigosTipo3 
+                qntInimigosTipo3,
+                qntInimigosTipo5
             }.TrueForAll(
                 (qntInimigo) => qntInimigo <= 0
             );
@@ -77,6 +81,7 @@ namespace jogoInicial
             qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
             qntInimigosTipo2 = DBFases.mapas[nivelFase]._qntInimigosTipo2;
             qntInimigosTipo3 = DBFases.mapas[nivelFase]._qntInimigosTipo3;
+            qntInimigosTipo5 = DBFases.mapas[nivelFase]._modoFuga ? 1 : 0;
             Mapa.MostrarMapa();
         }
 
@@ -119,10 +124,10 @@ namespace jogoInicial
                 break;
             }
             
-            ItemAtaque.IntervaloVerificaItemAtaque();
-            
             foreach(FaseStatus fase in DBFases.mapas) {
                 int faseAtual = nivelFase;
+
+                Espada.IntervaloVerificaEspada(nivelFase);
 
                 if (fase._qntInimigosTipo1 > 0) {
                     Inimigo.IntervaloMovimentoInimigo();
@@ -132,8 +137,16 @@ namespace jogoInicial
                     Inimigo.IntervaloMovimentoInimigo2();
                 }
 
-                if(fase._temItemDefesa){
-                    ItemDefesa.IntervaloVerificaItemDefesa();
+                if (qntInimigosTipo5 > 0) {
+                    Inimigo.IntervaloMovimentoInimigo5();
+                }
+
+                if(fase._escudo){
+                    Escudo.IntervaloVerificaEscudo(nivelFase);
+                }
+                
+                if(fase._picareta){
+                    Picareta.IntervaloVerificaPicareta(nivelFase);
                 }
             
                 Mapa.MostrarMapa();

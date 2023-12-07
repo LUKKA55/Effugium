@@ -3,12 +3,12 @@ namespace jogoInicial
 {
     public class Personagem
     {
-        public static string[] modelosPersonagem = { "()", "[]", "{}", "{]" };
+        public static string[] modelosPersonagem = { "()", "[]", "{}", "{]", "(T", "[T" };
         public static void Movimentacao(Direcao direcao){
             int[] posicao = new int[2];
             for (int i = 0; i < Mapa.mapa.GetLength(0); i++){
                 for (int j = 0; j < Mapa.mapa.GetLength(1); j++){
-                    if(Mapa.mapa[i,j] == "()" || Mapa.mapa[i,j] == "{}" || Mapa.mapa[i,j] == "[]" || Mapa.mapa[i,j] == "{]"){
+                    if(modelosPersonagem.Contains(Mapa.mapa[i,j])){
                         posicao[0] = i;
                         posicao[1] = j;
                     }
@@ -37,52 +37,112 @@ namespace jogoInicial
 
             if(destino == "  "){
                 limpaLugarAntigo(posicao);
-                if(ItemAtaque.nmrPuloAtaqueValido > 0 && ItemDefesa.usandoDefesa){
+                if(Espada.nmrPuloAtaqueValido > 0 && Escudo.usandoDefesa){
                     Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "{]";
-                    ItemAtaque.nmrPuloAtaqueValido--;
+                    Espada.nmrPuloAtaqueValido--;
 
-                }else if(ItemAtaque.nmrPuloAtaqueValido > 0){
+                }else if(Escudo.usandoDefesa && Picareta.equipada){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "[T";
+
+                }else if(Espada.nmrPuloAtaqueValido > 0){
                     Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "{}";
-                    ItemAtaque.nmrPuloAtaqueValido--;
+                    Espada.nmrPuloAtaqueValido--;
 
-                }else if (ItemDefesa.usandoDefesa){
+                }else if (Escudo.usandoDefesa){
                     Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "[]";
                     
+                }else if(Picareta.equipada){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "(T";
+
                 }else{
                     Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
+                }
+
+                if (Game.qntInimigosTipo5 != 0) {
+                    if(
+                        !(variacaoPosicao[0] > 0 && variacaoPosicao[0] < Mapa.mapa.GetLength(0)-1 && 
+                        variacaoPosicao[1] > 0 && variacaoPosicao[1] < Mapa.mapa.GetLength(1)-1)
+                    ) {
+                        Game.Vitoria();
+                    }
                 }
             }else if(destino == "<-"){
                 limpaLugarAntigo(posicao);
-                if (ItemDefesa.usandoDefesa){
+
+                if(Escudo.usandoDefesa && Picareta.equipada){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "[T";
+
+                }else if (Escudo.usandoDefesa){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "[]";
+                    
+                }else if(Picareta.equipada){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "(T";
+
+                }else{
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
+                }
+                Espada.quantidade++;
+
+            }else if(destino == "<>"){
+                limpaLugarAntigo(posicao);
+
+                if(Picareta.equipada){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "(T";
+                    Espada.nmrPuloAtaqueValido--;
+
+                }else if(Espada.nmrPuloAtaqueValido > 0){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "{}";
+                    Espada.nmrPuloAtaqueValido--;
+
+                }else{
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
+                }
+                Escudo.quantidade++;
+
+            }else if(destino == "T "){
+                limpaLugarAntigo(posicao);
+
+                if(Espada.nmrPuloAtaqueValido > 0 && Escudo.usandoDefesa){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "{]";
+                    Espada.nmrPuloAtaqueValido--;
+
+                }else if(Espada.nmrPuloAtaqueValido > 0){
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "{}";
+                    Espada.nmrPuloAtaqueValido--;
+
+                }else if (Escudo.usandoDefesa){
                     Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "[]";
                     
                 }else{
                     Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
                 }
-                ItemAtaque.quantidade++;
+                Picareta.quantidade++;
 
-            }else if(destino == "<>"){
-                limpaLugarAntigo(posicao);
-                if(ItemAtaque.nmrPuloAtaqueValido > 0){
-                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "{}";
-                    ItemAtaque.nmrPuloAtaqueValido--;
-
-                }else{
-                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "()";
+            }else if(destino == "~~"){
+                if(Picareta.equipada){
+                    Picareta.equipada = false;
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "  ";
                 }
-                ItemDefesa.quantidade++;
-
-            }else if(ItemAtaque.nmrPuloAtaqueValido > 0 && Inimigo.todosTiposInimigo.Find(inimigo => inimigo == destino) != null){
+            }else if(destino == "||" || destino == "=="){
+                if(
+                    variacaoPosicao[0] > 0 && variacaoPosicao[0] < Mapa.mapa.GetLength(0)-1 && 
+                    variacaoPosicao[1] > 0 && variacaoPosicao[1] < Mapa.mapa.GetLength(1)-1 &&
+                    Picareta.equipada
+                ){
+                    Picareta.equipada = false;
+                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "  ";
+                }
+            }else if(Espada.nmrPuloAtaqueValido > 0 && Inimigo.todosTiposInimigo.Find(inimigo => inimigo == destino) != null){
                 int tipoInimigo = Inimigo.todosTiposInimigo.FindIndex(inimigo => inimigo == destino) + 1;
 
                 limpaLugarAntigo(posicao);
                 
-                ItemAtaque.nmrPuloAtaqueValido = 0;
-                Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = ItemDefesa.usandoDefesa ? "[]" : "()";
+                Espada.nmrPuloAtaqueValido = 0;
+                Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = Escudo.usandoDefesa ? "[]" : "()";
                 
                 Game.MatarInimigo((enumInimigos)tipoInimigo);
+
             }
-              
             Mapa.CheckMapaIsRenderizando();
         }
     }

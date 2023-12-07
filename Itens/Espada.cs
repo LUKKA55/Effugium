@@ -1,18 +1,20 @@
 namespace jogoInicial
 {
-    public class ItemAtaque
+    public class Espada
     {
         public static int quantidade = 0;
 
         public static int nmrPuloAtaqueValido = 0;
 
-        public static async Task IntervaloVerificaItemAtaque(){
+        public static async Task IntervaloVerificaEspada(int faseAtual){
             await Task.Delay(15000);
-            VerificaItemAtaque();
-            await IntervaloVerificaItemAtaque();  
+            if (faseAtual != Game.nivelFase) return;
+
+            VerificaEspada();
+            await IntervaloVerificaEspada(faseAtual);  
         }
 
-        public static void VerificaItemAtaque(){
+        public static void VerificaEspada(){
             bool achouItem = false;
 
             for (int i = 0; i < Mapa.mapa.GetLength(0); i++){

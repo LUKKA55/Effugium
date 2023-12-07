@@ -14,6 +14,8 @@ namespace jogoInicial
                 Console.WriteLine();
             }
             Inventario.MostrarInventario();
+
+            // MENSAGEM DE AVISO
         }
 
         public static void CheckMapaIsRenderizando() {

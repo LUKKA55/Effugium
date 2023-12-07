@@ -2,9 +2,12 @@ namespace jogoInicial
 {
     public class Inimigo
     {
-        static public List<string> todosTiposInimigo = new(){"XX", ")("};
+        static public List<string> todosTiposInimigo = new(){"XX", ")(", "@@"};
         static public TipoInimigo tipoInimigo1 = new("XX");
         static public TipoInimigo tipoInimigo2 = new(")(");
+        static public TipoInimigo tipoInimigo3 = new("");
+        static public TipoInimigo tipoInimigo4 = new("");
+        static public TipoInimigo tipoInimigo5 = new("@@");
         
         // Variacao da movimentação do inimigo
         static public List<List<int>> altPosicao = new List<List<int>>{
@@ -58,7 +61,11 @@ namespace jogoInicial
                         destino == "  " || 
                         Inventario.todosTiposItens.FindIndex(i => i == destino) >= 0
                     ){
-                        limpaLugarAntigoInimigo(posicoesInimigos, i);
+                        if (tipoInimigo._aparencia != "@@") {
+                            limpaLugarAntigoInimigo(posicoesInimigos, i);
+                        } else {
+                            Game.qntInimigosTipo5++;
+                        }
                         acaoInimigo();
                         break;
                         
@@ -69,8 +76,8 @@ namespace jogoInicial
                                 inimigo == tipoInimigo._aparencia)
                             + 1;
                         Game.MatarInimigo((enumInimigos)idtipoInimigo);
-                        ItemDefesa.usandoDefesa = false;
-                        ItemAtaque.nmrPuloAtaqueValido = 0;
+                        Escudo.usandoDefesa = false;
+                        Espada.nmrPuloAtaqueValido = 0;
                         acaoInimigo(true);
                         limpaLugarAntigoInimigo(posicoesInimigos, i);
                         break;
@@ -81,18 +88,20 @@ namespace jogoInicial
                                 inimigo == tipoInimigo._aparencia)
                             + 1;
                         Game.MatarInimigo((enumInimigos)idtipoInimigo);
-                        ItemAtaque.nmrPuloAtaqueValido = 0;
+                        Espada.nmrPuloAtaqueValido = 0;
                         acaoInimigo(true);
                         limpaLugarAntigoInimigo(posicoesInimigos, i);
                         break;
 
                     } else if(destino == "[]"){
-                        ItemDefesa.usandoDefesa = false;
+                        Escudo.usandoDefesa = false;
                         acaoInimigo(true);
                         break;
                         
                     } else if(destino == "()"){
-                        limpaLugarAntigoInimigo(posicoesInimigos, i);
+                        if (tipoInimigo._aparencia != "@@") {
+                            limpaLugarAntigoInimigo(posicoesInimigos, i);
+                        }
                         acaoInimigo();
                         Mapa.CheckMapaIsRenderizando();
                         MostrarMensagem.GameOver();
@@ -102,6 +111,7 @@ namespace jogoInicial
                         cloneAltPosicao.RemoveAt(idxAleatorio);
                     }
                 };
+
             }
             Mapa.CheckMapaIsRenderizando();
         }
@@ -117,6 +127,14 @@ namespace jogoInicial
                 await Task.Delay((int)(750 * Game.dificuldade));
                 MovimentacaoInimigo(tipoInimigo2);
                 await IntervaloMovimentoInimigo2();  
+            }
+        }
+
+        public static async Task IntervaloMovimentoInimigo5(){
+            if (Game.qntInimigosTipo5 > 0) {           
+                await Task.Delay((int)(1500 * Game.dificuldade));
+                MovimentacaoInimigo(tipoInimigo5);
+                await IntervaloMovimentoInimigo5();  
             }
         }
     }
