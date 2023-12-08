@@ -17,13 +17,13 @@ namespace jogoInicial
 
     public class Game
     {
-        public static int nivelFase = 7;
+        public static int nivelFase = 10;
         // Nivel Fase deve ficar em 0, esta assim para testes
         public static float dificuldade;
         public static int qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
         public static int qntInimigosTipo2 = DBFases.mapas[nivelFase]._qntInimigosTipo2;
         public static int qntInimigosTipo3 = DBFases.mapas[nivelFase]._qntInimigosTipo3;
-        public static int qntInimigosTipo5 = DBFases.mapas[nivelFase]._modoFuga ? 1 : 0;
+        public static int qntInimigosTipo5 = DBFases.mapas[nivelFase]._modoJogo == "FUGA" ? 1 : 0;
         public static ConsoleKeyInfo key;
 
         public static bool pararRenderizacoes = false;
@@ -54,7 +54,6 @@ namespace jogoInicial
             );
 
             if (todosInimigoMortos) {
-                nivelFase += 1;
                 if (nivelFase == DBFases.mapas.Count()) {
                     Vitoria();
                 } else {
@@ -64,6 +63,7 @@ namespace jogoInicial
         }
 
         public static async Task ProximaFase() {
+            nivelFase += 1;
             pararRenderizacoes = true;
 
             char[] load = new char[40];
@@ -81,12 +81,14 @@ namespace jogoInicial
             qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
             qntInimigosTipo2 = DBFases.mapas[nivelFase]._qntInimigosTipo2;
             qntInimigosTipo3 = DBFases.mapas[nivelFase]._qntInimigosTipo3;
-            qntInimigosTipo5 = DBFases.mapas[nivelFase]._modoFuga ? 1 : 0;
-            Mapa.MostrarMapa();
+            qntInimigosTipo5 = DBFases.mapas[nivelFase]._modoJogo == "FUGA" ? 1 : 0;
+            Mapa.CheckMapaIsRenderizando();
+            /* Mapa.RenderizarMapa(); */
         }
 
         public static void Vitoria() {
-            Mapa.MostrarMapa();
+            /* Mapa.RenderizarMapa(); */
+            Mapa.CheckMapaIsRenderizando();
             MostrarMensagem.Win();
             Environment.Exit(0);
         }
@@ -129,27 +131,26 @@ namespace jogoInicial
 
                 Espada.IntervaloVerificaEspada(nivelFase);
 
-                if (fase._qntInimigosTipo1 > 0) {
+                if (DBFases.mapas.ElementAt(nivelFase)._qntInimigosTipo1 > 0) 
                     Inimigo.IntervaloMovimentoInimigo();
-                }
 
-                if (fase._qntInimigosTipo2 > 0) {
+                if (DBFases.mapas.ElementAt(nivelFase)._qntInimigosTipo2 > 0) 
                     Inimigo.IntervaloMovimentoInimigo2();
-                }
 
-                if (qntInimigosTipo5 > 0) {
+                if (DBFases.mapas.ElementAt(nivelFase)._qntInimigosTipo3 > 0) 
+                    Inimigo.IntervaloMovimentoInimigo3();
+
+                if (DBFases.mapas.ElementAt(nivelFase)._modoJogo == "FUGA") 
                     Inimigo.IntervaloMovimentoInimigo5();
-                }
 
-                if(fase._escudo){
+                if(DBFases.mapas.ElementAt(nivelFase)._escudo)
                     Escudo.IntervaloVerificaEscudo(nivelFase);
-                }
                 
-                if(fase._picareta){
+                if(DBFases.mapas.ElementAt(nivelFase)._picareta)
                     Picareta.IntervaloVerificaPicareta(nivelFase);
-                }
             
-                Mapa.MostrarMapa();
+                /* Mapa.RenderizarMapa(); */
+                Mapa.CheckMapaIsRenderizando();
                 do{
                     key = Console.ReadKey();
                     if (pararRenderizacoes) {

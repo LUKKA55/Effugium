@@ -2,8 +2,7 @@ namespace jogoInicial
 {
     public class FaseStatus {
         public string[,] _mapa;
-
-        public bool _modoFuga;
+        public string _modoJogo;
         public int _qntInimigosTipo1;
         public int _qntInimigosTipo2;
         public int _qntInimigosTipo3;
@@ -15,7 +14,7 @@ namespace jogoInicial
             string[,] mapa,
             bool escudo, 
             bool picareta,
-            bool modoFuga,
+            string modoJogo,
             int qntInimigosTipo1 = 0, 
             int qntInimigosTipo2 = 0, 
             int qntInimigosTipo3 = 0
@@ -26,7 +25,7 @@ namespace jogoInicial
             this._qntInimigosTipo3 = qntInimigosTipo3;
             this._escudo = escudo;
             this._picareta = picareta;
-            this._modoFuga = modoFuga;
+            this._modoJogo = modoJogo;
         }
     }
     
