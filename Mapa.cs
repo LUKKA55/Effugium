@@ -3,7 +3,7 @@ namespace jogoInicial
 {
     public class Mapa
     {
-        public static int renderizacoesPendentes = 0;
+        public static bool estaRenderizando = false;
         public static string[,] mapa = DBFases.mapas[Game.nivelFase]._mapa;
 
         public static void RenderizarMapa(){
@@ -16,18 +16,12 @@ namespace jogoInicial
         }
 
         public static void CheckMapaIsRenderizando() {
-            int qntRenderizacoesAtuais = renderizacoesPendentes;
-            if (renderizacoesPendentes != 0) {
-                while (!(renderizacoesPendentes < qntRenderizacoesAtuais)) {
-                };
+            if (estaRenderizando || Game.pararRenderizacoes) {
+                return;
             }
-            renderizacoesPendentes++;
-            if (Game.pararRenderizacoes) {
-                renderizacoesPendentes = 0;
-            } else {
-                RenderizarMapa();
-                renderizacoesPendentes--;
-            }
+            estaRenderizando = true;
+            RenderizarMapa();
+            estaRenderizando = false;
         }
 
         public static void MostrarMapaNormal(){

@@ -1,20 +1,17 @@
 ﻿using System;
 namespace jogoInicial
 {
-
     public enum enumInimigos {
         tipo1 = 1,
         tipo2,
         tipo3
     }
-
     public enum Direcao {
         Cima = 1,
         Esquerda,
         Baixo,
         Direita
     }
-
     public class Game
     {
         public static int nivelFase = 10;
