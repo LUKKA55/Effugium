@@ -14,7 +14,7 @@ namespace jogoInicial
     }
     public class Game
     {
-        public static int nivelFase = 8;
+        public static int nivelFase = 14;
         // Nivel Fase deve ficar em 0, esta assim para testes
         public static float dificuldade;
         public static int qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
@@ -73,7 +73,9 @@ namespace jogoInicial
                 await Task.Delay(75);
             } 
             pararRenderizacoes = false;
-
+            
+            Personagem.posicaoPersonagem[0] = 2;
+            Personagem.posicaoPersonagem[1] = 9;
             Mapa.mapa = DBFases.mapas[nivelFase]._mapa;
             qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
             qntInimigosTipo2 = DBFases.mapas[nivelFase]._qntInimigosTipo2;
