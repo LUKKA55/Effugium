@@ -2,7 +2,7 @@ namespace jogoInicial
 {
     public class Inventario
     {
-        static public List<string> todosTiposItens= new(){"<-", "<>", "T "}; 
+        static public List<string> todosTiposItens= new(){"<-", "<>", "T ", "D-"}; 
         public static void MostrarInventario(){
             if(Espada.nmrPuloAtaqueValido > 0){
                 Console.WriteLine("Ataque tem efeito pelos próximos {0} pulos", Espada.nmrPuloAtaqueValido);
@@ -13,7 +13,10 @@ namespace jogoInicial
             if(Picareta.equipada){
                 Console.WriteLine("Está pode quebrar UMA parede do mapa (menos as bordas)");
             }
-            if (Espada.quantidade > 0 || Escudo.quantidade > 0 || Picareta.quantidade > 0){
+            if(Arco.equipado){
+                Console.WriteLine("Aperte a tecla da direção que deseja atirar a flecha");
+            }
+            if (Espada.quantidade > 0 || Escudo.quantidade > 0 || Picareta.quantidade > 0 || Arco.quantidade > 0){
                 Console.WriteLine("Inventário");
             }
             if (Espada.quantidade > 0 ){
@@ -24,6 +27,9 @@ namespace jogoInicial
             }
             if (Picareta.quantidade > 0 ){
                 Console.WriteLine(" -Picareta para quebrar parede {0}", Picareta.quantidade);
+            }
+            if (Arco.quantidade > 0 ){
+                Console.WriteLine(" -Arco para atirar flecha {0}", Arco.quantidade);
             }
         }
 
@@ -44,15 +50,18 @@ namespace jogoInicial
             {
                 case 1:
                     if(Espada.quantidade > 0){
-                        Espada.quantidade--;
-                        Espada.nmrPuloAtaqueValido = 10;
+                        if(!Picareta.equipada && !Arco.equipado){
+                            Espada.quantidade--;
+                            Espada.nmrPuloAtaqueValido = 10;
 
-                        if(Escudo.usandoDefesa){
-                            Mapa.mapa[posicao[0],posicao[1]] = "{]";
+                            if(Escudo.usandoDefesa){
+                                Mapa.mapa[posicao[0],posicao[1]] = "[}";
+                            }else{
+                                Mapa.mapa[posicao[0],posicao[1]] = "{}";
+                            }
                             Mapa.CheckMapaIsRenderizando();
                         }else{
-                            Mapa.mapa[posicao[0],posicao[1]] = "{}";
-                            Mapa.CheckMapaIsRenderizando();
+                            // MENSAGEM DE AVISO
                         }
                     }
                 break;
@@ -62,27 +71,42 @@ namespace jogoInicial
                         Escudo.usandoDefesa = true;
 
                         if(Espada.nmrPuloAtaqueValido > 0){
-                            Mapa.mapa[posicao[0],posicao[1]] = "{]";
-                            Mapa.CheckMapaIsRenderizando();
+                            Mapa.mapa[posicao[0],posicao[1]] = "[}";
                         }else{
                             Mapa.mapa[posicao[0],posicao[1]] = "[]";
-                            Mapa.CheckMapaIsRenderizando();
                         }
+                        Mapa.CheckMapaIsRenderizando();
                     }
                 break;
                 case 3:
                     if(Picareta.quantidade > 0){
-                        if(Espada.nmrPuloAtaqueValido == 0 ){
+                        if(Espada.nmrPuloAtaqueValido == 0 && !Arco.equipado){
                             Picareta.quantidade --;
                             Picareta.equipada = true;
                             
                             if(Escudo.usandoDefesa){
                                 Mapa.mapa[posicao[0],posicao[1]] = "[T";
-                                Mapa.CheckMapaIsRenderizando();
                             }else{
                                 Mapa.mapa[posicao[0],posicao[1]] = "(T";
-                                Mapa.CheckMapaIsRenderizando();
                             }
+                            Mapa.CheckMapaIsRenderizando();
+                        }else{
+                            // MENSAGEM DE AVISO
+                        }
+                    }
+                break;
+                case 4:
+                    if(Arco.quantidade > 0){
+                        if(Espada.nmrPuloAtaqueValido == 0 && !Picareta.equipada){
+                            Arco.quantidade --;
+                            Arco.equipado = true;
+                            
+                            if(Escudo.usandoDefesa){
+                                Mapa.mapa[posicao[0],posicao[1]] = "[D";
+                            }else{
+                                Mapa.mapa[posicao[0],posicao[1]] = "(D";
+                            }
+                            Mapa.CheckMapaIsRenderizando();
                         }else{
                             // MENSAGEM DE AVISO
                         }

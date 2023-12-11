@@ -14,7 +14,7 @@ namespace jogoInicial
     }
     public class Game
     {
-        public static int nivelFase = 10;
+        public static int nivelFase = 8;
         // Nivel Fase deve ficar em 0, esta assim para testes
         public static float dificuldade;
         public static int qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
@@ -80,11 +80,9 @@ namespace jogoInicial
             qntInimigosTipo3 = DBFases.mapas[nivelFase]._qntInimigosTipo3;
             qntInimigosTipo5 = DBFases.mapas[nivelFase]._modoJogo == "FUGA" ? 1 : 0;
             Mapa.CheckMapaIsRenderizando();
-            /* Mapa.RenderizarMapa(); */
         }
 
         public static void Vitoria() {
-            /* Mapa.RenderizarMapa(); */
             Mapa.CheckMapaIsRenderizando();
             MostrarMensagem.Win();
             Environment.Exit(0);
@@ -145,8 +143,10 @@ namespace jogoInicial
                 
                 if(DBFases.mapas.ElementAt(nivelFase)._picareta)
                     Picareta.IntervaloVerificaPicareta(nivelFase);
+                
+                if(DBFases.mapas.ElementAt(nivelFase)._arco)
+                    Arco.IntervaloVerificaArco(nivelFase);
             
-                /* Mapa.RenderizarMapa(); */
                 Mapa.CheckMapaIsRenderizando();
                 do{
                     key = Console.ReadKey();

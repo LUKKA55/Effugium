@@ -38,7 +38,7 @@ namespace jogoInicial
         }
         
         public static void MostraMapaEscuro() {
-            int[] posicaoUsuario = Personagem.posicaoPersonagem;
+            List<int> posicaoUsuario = Personagem.posicaoPersonagem;
             List<List<int>> posicoesMapaRevelado = new (){
                 new() {posicaoUsuario[0], posicaoUsuario[1]},
                 new() {posicaoUsuario[0]+1, posicaoUsuario[1]}, 

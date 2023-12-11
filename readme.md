@@ -1,2 +1,10 @@
-falta implementar movimentacao de inimigo dinamica, ou seja,s e repete para qnts casas o inimigo deve se mover
-adicionar inimigo novo no mapa
+**Task**
+
+- [Pendente] Refazer sistema de respawn dos itens.
+ 
+- [Pendente] Criar item Pulo (anda 2 casas).
+
+- [Pendente] Arrumar bug visão posicao inicial jogador no começo fase escura
+
+- [Pendente] Inimigo Boss (caça inimigos "XX" e fica mais forte).
+

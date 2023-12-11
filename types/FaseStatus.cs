@@ -8,12 +8,13 @@ namespace jogoInicial
         public int _qntInimigosTipo3;
         public bool _espada = true;
         public bool _escudo;
-
         public bool _picareta;
+        public bool _arco;
         public FaseStatus(
             string[,] mapa,
             bool escudo, 
             bool picareta,
+            bool arco,
             string modoJogo,
             int qntInimigosTipo1 = 0, 
             int qntInimigosTipo2 = 0, 
@@ -25,6 +26,7 @@ namespace jogoInicial
             this._qntInimigosTipo3 = qntInimigosTipo3;
             this._escudo = escudo;
             this._picareta = picareta;
+            this._arco = arco;
             this._modoJogo = modoJogo;
         }
     }

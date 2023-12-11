@@ -11,15 +11,15 @@ namespace jogoInicial
         
         // Variacao da movimentação do inimigo
         static public List<List<int>> altPosicaoNormal = new List<List<int>>{
-            new List<int>{1, 0}, // cima
-            new List<int>{-1, 0}, // baixo
+            new List<int>{-1, 0}, // cima
+            new List<int>{1, 0}, // baixo
             new List<int>{0, 1}, // direita
             new List<int>{0, -1}, // esquerda
         };
 
         static public List<List<int>> altPosicaoComDiagonal = new List<List<int>>{
-            new List<int>{1, 0}, // cima
-            new List<int>{-1, 0}, // baixo
+            new List<int>{-1, 0}, // cima
+            new List<int>{1, 0}, // baixo
             new List<int>{0, 1}, // direita
             new List<int>{0, -1}, // esquerda
             new List<int>{-1, -1}, // cima - esquerda
@@ -85,7 +85,7 @@ namespace jogoInicial
                         acaoInimigo();
                         break;
                         
-                    } else if(destino == "{]"){
+                    } else if(destino == "[}"){
                         // Procura inimigo nos tipos para matar, precisa de index NAO aparencia
                         int idtipoInimigo = todosTiposInimigo
                             .FindIndex(inimigo => 
