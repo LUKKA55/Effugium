@@ -1,39 +1,37 @@
-
 namespace jogoInicial
 {
     public class Personagem
     {
         public static List<int> posicaoPersonagem = new (){2, 9};
-        public static string[] modelosPersonagem = { "()", "[]", "{}", "[}", "(T", "[T", "[D", "(D" };
-        public static string[] modelosPersonagemComEscudo = { "[]", "[}", "[T", "[D" };
+        public static Inventario inventario = new();
 
         public static string GetPersonagemEquipado() {  
             string personagemAtualizado = "()";
-            if (Espada.nmrPuloAtaqueValido > 0)
+            if (inventario.espada.nmrPuloAtaqueValido > 0)
                 personagemAtualizado = "{}";
             
-            if (Escudo.usandoDefesa) 
+            if (inventario.escudo._equipado) 
                 personagemAtualizado = personagemAtualizado == "{}" ? "[}" : "[]";
             
-            if (Picareta.equipada) 
+            if (inventario.picareta._equipado) 
                 personagemAtualizado = personagemAtualizado == "[]" ? "[T" : "(T";
 
-            if (Arco.equipado)
+            if (inventario.arco._equipado)
                 personagemAtualizado = personagemAtualizado == "[]" ? "[D" : "(D";
             
             return personagemAtualizado;
         }
         public static void Movimentacao(Direcao direcao){
             int[] posicao = new int[2];
-            for (int i = 0; i < Mapa.mapa.GetLength(0); i++){
-                for (int j = 0; j < Mapa.mapa.GetLength(1); j++){
-                    if(modelosPersonagem.Contains(Mapa.mapa[i,j])){
+            for (int i = 0; i < Game.GetMapa().GetLength(0); i++){
+                for (int j = 0; j < Game.GetMapa().GetLength(1); j++){
+                    if(DB.modelosPersonagem.Contains(Game.GetMapa()[i,j])){
                         posicao[0] = i;
                         posicao[1] = j;
                     }
                 }
             }
-            static string limpaLugarAntigo(int[] posicao) => Mapa.mapa[posicao[0],posicao[1]] = "  ";
+            static string limpaLugarAntigo(int[] posicao) => Game.GetMapa()[posicao[0],posicao[1]] = "  ";
 
             int[] variacaoPosicao = new int[2];
 
@@ -52,25 +50,25 @@ namespace jogoInicial
             variacaoPosicao[0] = posicao[0] + variacaoPosicaoZero;
             variacaoPosicao[1] = posicao[1] + variacaoPosicaoUm;
 
-            string destino = Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]];
+            string destino = Game.GetMapa()[variacaoPosicao[0],variacaoPosicao[1]];
 
-            if (Arco.equipado){
-                Arco.equipado = false;
-                Arco.AtirarFlecha(direcao, posicaoPersonagem);
+            if (inventario.arco._equipado){
+                inventario.arco._equipado = false;
+                inventario.arco.AtirarFlecha(direcao, posicaoPersonagem);
                 Mapa.CheckMapaIsRenderizando();
                 return;
             }
             if(destino == "  "){
                 limpaLugarAntigo(posicao);
 
-                if(Espada.nmrPuloAtaqueValido > 0)
-                    Espada.nmrPuloAtaqueValido--;
+                if(inventario.espada.nmrPuloAtaqueValido > 0)
+                    inventario.espada.nmrPuloAtaqueValido--;
 
-                Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = GetPersonagemEquipado();    
+                Game.GetMapa()[variacaoPosicao[0],variacaoPosicao[1]] = GetPersonagemEquipado();    
 
                 if(
-                    !(variacaoPosicao[0] > 0 && variacaoPosicao[0] < Mapa.mapa.GetLength(0)-1 && 
-                    variacaoPosicao[1] > 0 && variacaoPosicao[1] < Mapa.mapa.GetLength(1)-1)
+                    !(variacaoPosicao[0] > 0 && variacaoPosicao[0] < Game.GetMapa().GetLength(0)-1 && 
+                    variacaoPosicao[1] > 0 && variacaoPosicao[1] < Game.GetMapa().GetLength(1)-1)
                 ) {
                     Game.ProximaFase();
                 }
@@ -78,65 +76,99 @@ namespace jogoInicial
                 posicaoPersonagem[0] = variacaoPosicao[0];
                 posicaoPersonagem[1] = variacaoPosicao[1];
 
-            }else if(Inventario.todosTiposItens.FindIndex((i) => i == destino) >= 0){
-                int tipoItem = Inventario.todosTiposItens.FindIndex((i) => i == destino);
+            }else if(DB.todosTiposItens.FindIndex((i) => i._modelo == destino) >= 0){
+                int tipoItem = DB.todosTiposItens.FindIndex((i) => i._modelo == destino);
 
-                if(tipoItem == 0)
-                    Espada.quantidade++;
+                if(tipoItem == 0){
+                    inventario.espada._quantidade++;
+                    inventario.espada._itemNoMapa = false;
+                }
 
-                if(tipoItem == 1)
-                    Escudo.quantidade++;
+                if(tipoItem == 1){
+                    inventario.escudo._quantidade++;
+                    inventario.escudo._itemNoMapa = false;
+                }
 
-                if(tipoItem == 2)
-                    Picareta.quantidade++;
+                if(tipoItem == 2){
+                    inventario.picareta._quantidade++;
+                    inventario.picareta._itemNoMapa = false;
+                }
 
-                if(tipoItem == 3)
-                    Arco.quantidade++;
+                if(tipoItem == 3){
+                    inventario.arco._quantidade++;
+                    inventario.arco._itemNoMapa = false;
+                }
 
                 limpaLugarAntigo(posicao);
 
-                if(Espada.nmrPuloAtaqueValido > 0)
-                    Espada.nmrPuloAtaqueValido--;
+                if(inventario.espada.nmrPuloAtaqueValido > 0)
+                    inventario.espada.nmrPuloAtaqueValido--;
 
-                Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = GetPersonagemEquipado();    
+                Game.GetMapa()[variacaoPosicao[0],variacaoPosicao[1]] = GetPersonagemEquipado();    
 
                 posicaoPersonagem[0] = variacaoPosicao[0];
                 posicaoPersonagem[1] = variacaoPosicao[1];
 
             }else if(destino == "~~"  || destino == "//"){
-                if(Picareta.equipada){
-                    Picareta.equipada = false;
-                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "  ";
+                if(inventario.picareta._equipado){
+                    inventario.picareta._equipado = false;
+                    Game.GetMapa()[variacaoPosicao[0],variacaoPosicao[1]] = "  ";
                     posicaoPersonagem[0] = variacaoPosicao[0];
                     posicaoPersonagem[1] = variacaoPosicao[1];
                 }
             }else if(destino == "||" || destino == "=="){
                 if(
-                    variacaoPosicao[0] > 0 && variacaoPosicao[0] < Mapa.mapa.GetLength(0)-1 && 
-                    variacaoPosicao[1] > 0 && variacaoPosicao[1] < Mapa.mapa.GetLength(1)-1 &&
-                    Picareta.equipada
+                    variacaoPosicao[0] > 0 && variacaoPosicao[0] < Game.GetMapa().GetLength(0)-1 && 
+                    variacaoPosicao[1] > 0 && variacaoPosicao[1] < Game.GetMapa().GetLength(1)-1 &&
+                    inventario.picareta._equipado
                 ){
-                    Picareta.equipada = false;
-                    Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = "  ";
+                    inventario.picareta._equipado = false;
+                    Game.GetMapa()[variacaoPosicao[0],variacaoPosicao[1]] = "  ";
 
                     posicaoPersonagem[0] = variacaoPosicao[0];
                     posicaoPersonagem[1] = variacaoPosicao[1];
                 }
-            }else if(Espada.nmrPuloAtaqueValido > 0 && Inimigo.todosTiposInimigo.Find(inimigo => inimigo == destino) != null){
-                int tipoInimigo = Inimigo.todosTiposInimigo.FindIndex(inimigo => inimigo == destino) + 1;
+            }else if(inventario.espada.nmrPuloAtaqueValido > 0 && DB.todosTiposInimigo.Find(inimigo => inimigo == destino) != null){
+                int tipoInimigo = DB.todosTiposInimigo.FindIndex(inimigo => inimigo == destino) + 1;
 
                 limpaLugarAntigo(posicao);
                 
-                Espada.nmrPuloAtaqueValido = 0;
-                Mapa.mapa[variacaoPosicao[0],variacaoPosicao[1]] = GetPersonagemEquipado();
+                inventario.espada.nmrPuloAtaqueValido = 0;
+                Game.GetMapa()[variacaoPosicao[0],variacaoPosicao[1]] = GetPersonagemEquipado();
                 
-                Game.MatarInimigo((enumInimigos)tipoInimigo);
+                Personagem.MatarInimigo((EnumInimigos)tipoInimigo);
 
                 posicaoPersonagem[0] = variacaoPosicao[0];
                 posicaoPersonagem[1] = variacaoPosicao[1];
             }
             
             Mapa.CheckMapaIsRenderizando();
+        }
+
+        public static void ResetPosicaoPersonagem() {
+            posicaoPersonagem[0] = 2;
+            posicaoPersonagem[1] = 9;
+        }
+
+        public static void MatarInimigo(EnumInimigos tipoInimigo) {
+            switch(tipoInimigo) {
+                case EnumInimigos.tipo1:
+                    Game.FaseAtual._qntInimigosTipo1--;
+                break;
+                case EnumInimigos.tipo2:
+                    Game.FaseAtual._qntInimigosTipo2--;              
+                break;
+                case EnumInimigos.tipo3:
+                    Game.FaseAtual._qntInimigosTipo3--;             
+                break; 
+                case EnumInimigos.tipo4:
+                    Game.FaseAtual._qntInimigosTipo4--;             
+                break;
+                case EnumInimigos.tipo5:
+                    Game.FaseAtual._qntInimigosTipo5--;             
+                break;                                                                   
+            }
+            Game.CheckProximaFase();
         }
     }
 }

@@ -1,11 +1,5 @@
-﻿using System;
-namespace jogoInicial
+﻿namespace jogoInicial
 {
-    public enum enumInimigos {
-        tipo1 = 1,
-        tipo2,
-        tipo3
-    }
     public enum Direcao {
         Cima = 1,
         Esquerda,
@@ -14,44 +8,26 @@ namespace jogoInicial
     }
     public class Game
     {
-        public static int nivelFase = 14;
+        public static int nivelFase = 0;
+        public static FaseStatus FaseAtual = DB.fases[nivelFase];
         // Nivel Fase deve ficar em 0, esta assim para testes
         public static float dificuldade;
-        public static int qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
-        public static int qntInimigosTipo2 = DBFases.mapas[nivelFase]._qntInimigosTipo2;
-        public static int qntInimigosTipo3 = DBFases.mapas[nivelFase]._qntInimigosTipo3;
-        public static int qntInimigosTipo5 = DBFases.mapas[nivelFase]._modoJogo == "FUGA" ? 1 : 0;
         public static ConsoleKeyInfo key;
-
         public static bool pararRenderizacoes = false;
-
-        public static void MatarInimigo(enumInimigos tipoInimigo) {
-            switch(tipoInimigo) {
-                case enumInimigos.tipo1:
-                    qntInimigosTipo1--;
-                break;
-                case enumInimigos.tipo2:
-                    qntInimigosTipo2--;                
-                break;
-                case enumInimigos.tipo3:
-                    qntInimigosTipo3--;                
-                break;                                
-            }
-            CheckProximaFase();
-        }
 
         public static void CheckProximaFase() {
             bool todosInimigoMortos = new List<int>{ 
-                qntInimigosTipo1, 
-                qntInimigosTipo2, 
-                qntInimigosTipo3,
-                qntInimigosTipo5
+                FaseAtual._qntInimigosTipo1, 
+                FaseAtual._qntInimigosTipo2, 
+                FaseAtual._qntInimigosTipo3,
+                FaseAtual._qntInimigosTipo4,
+                FaseAtual._qntInimigosTipo5
             }.TrueForAll(
                 (qntInimigo) => qntInimigo <= 0
             );
 
             if (todosInimigoMortos) {
-                if (nivelFase == DBFases.mapas.Count()) {
+                if (nivelFase == DB.fases.Count() - 1) {
                     Vitoria();
                 } else {
                     ProximaFase();
@@ -74,13 +50,9 @@ namespace jogoInicial
             } 
             pararRenderizacoes = false;
             
-            Personagem.posicaoPersonagem[0] = 2;
-            Personagem.posicaoPersonagem[1] = 9;
-            Mapa.mapa = DBFases.mapas[nivelFase]._mapa;
-            qntInimigosTipo1 = DBFases.mapas[nivelFase]._qntInimigosTipo1;
-            qntInimigosTipo2 = DBFases.mapas[nivelFase]._qntInimigosTipo2;
-            qntInimigosTipo3 = DBFases.mapas[nivelFase]._qntInimigosTipo3;
-            qntInimigosTipo5 = DBFases.mapas[nivelFase]._modoJogo == "FUGA" ? 1 : 0;
+            FaseAtual = DB.fases[nivelFase];
+            Personagem.ResetPosicaoPersonagem();
+
             Mapa.CheckMapaIsRenderizando();
         }
 
@@ -90,8 +62,11 @@ namespace jogoInicial
             Environment.Exit(0);
         }
 
-        public static void Main()
-        {
+        public static string[,] GetMapa() {
+            return FaseAtual._mapa;
+        }
+
+        public static void Main() {
             Console.Clear();
             Console.WriteLine("Jogo inicializado");
             Console.WriteLine("Aperte X para encerrar");
@@ -123,31 +98,36 @@ namespace jogoInicial
                 break;
             }
             
-            foreach(FaseStatus fase in DBFases.mapas) {
+            foreach(FaseStatus fase in DB.fases) {
                 int faseAtual = nivelFase;
 
-                Espada.IntervaloVerificaEspada(nivelFase);
+                Personagem.inventario.espada._itemNoMapa = true;
 
-                if (DBFases.mapas.ElementAt(nivelFase)._qntInimigosTipo1 > 0) 
+                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo1 > 0) 
                     Inimigo.IntervaloMovimentoInimigo();
 
-                if (DBFases.mapas.ElementAt(nivelFase)._qntInimigosTipo2 > 0) 
+                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo2 > 0) 
                     Inimigo.IntervaloMovimentoInimigo2();
 
-                if (DBFases.mapas.ElementAt(nivelFase)._qntInimigosTipo3 > 0) 
+                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo3 > 0) 
                     Inimigo.IntervaloMovimentoInimigo3();
 
-                if (DBFases.mapas.ElementAt(nivelFase)._modoJogo == "FUGA") 
+                if (DB.fases.ElementAt(nivelFase)._modoJogo == "FUGA") 
                     Inimigo.IntervaloMovimentoInimigo5();
 
-                if(DBFases.mapas.ElementAt(nivelFase)._escudo)
-                    Escudo.IntervaloVerificaEscudo(nivelFase);
-                
-                if(DBFases.mapas.ElementAt(nivelFase)._picareta)
-                    Picareta.IntervaloVerificaPicareta(nivelFase);
-                
-                if(DBFases.mapas.ElementAt(nivelFase)._arco)
-                    Arco.IntervaloVerificaArco(nivelFase);
+                if(DB.fases.ElementAt(nivelFase)._arco)
+                    Personagem.inventario.arco._itemNoMapa = true;
+
+                if(DB.fases.ElementAt(nivelFase)._espada)
+                    Personagem.inventario.espada._itemNoMapa = true;
+
+                if(DB.fases.ElementAt(nivelFase)._picareta)
+                    Personagem.inventario.picareta._itemNoMapa = true;
+
+                if(DB.fases.ElementAt(nivelFase)._escudo)
+                    Personagem.inventario.escudo._itemNoMapa = true;
+
+                Mapa.VerificaSpawnItens();
             
                 Mapa.CheckMapaIsRenderizando();
                 do{
@@ -168,7 +148,7 @@ namespace jogoInicial
                         Personagem.Movimentacao(Direcao.Direita);
                     }
                     if(char.IsDigit(key.KeyChar)){
-                        Inventario.UsarItem(key.KeyChar);
+                        Personagem.inventario.UsarItem(key.KeyChar);
                     }
                     if (key.Key == ConsoleKey.X){
                         MostrarMensagem.Exit();

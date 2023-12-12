@@ -6,6 +6,8 @@ namespace jogoInicial
         public int _qntInimigosTipo1;
         public int _qntInimigosTipo2;
         public int _qntInimigosTipo3;
+        public int _qntInimigosTipo4;
+        public int _qntInimigosTipo5;
         public bool _espada = true;
         public bool _escudo;
         public bool _picareta;
@@ -18,12 +20,16 @@ namespace jogoInicial
             string modoJogo,
             int qntInimigosTipo1 = 0, 
             int qntInimigosTipo2 = 0, 
-            int qntInimigosTipo3 = 0
+            int qntInimigosTipo3 = 0,
+            int qntInimigosTipo4 = 0,
+            int qntInimigosTipo5 = 0
         ) {
             this._mapa = mapa;
             this._qntInimigosTipo1 = qntInimigosTipo1;
             this._qntInimigosTipo2 = qntInimigosTipo2;
             this._qntInimigosTipo3 = qntInimigosTipo3;
+            this._qntInimigosTipo4 = qntInimigosTipo4;
+            this._qntInimigosTipo5 = qntInimigosTipo5;
             this._escudo = escudo;
             this._picareta = picareta;
             this._arco = arco;
