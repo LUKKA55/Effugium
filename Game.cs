@@ -38,7 +38,7 @@
             nivelFase += 1;
             pararRenderizacoes = true;
 
-            char[] load = new char[40];
+            char[] load = new char[50];
             for(int i = 0; i < load.Length; i++){
                 load[i] = '.';
 
@@ -101,16 +101,16 @@
                 int faseAtual = nivelFase;
 
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo1 > 0) 
-                    Inimigo.IntervaloMovimentoInimigo();
+                    Inimigos.IntervaloMovimentoInimigo();
 
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo2 > 0) 
-                    Inimigo.IntervaloMovimentoInimigo2();
+                    Inimigos.IntervaloMovimentoInimigo2();
 
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo3 > 0) 
-                    Inimigo.IntervaloMovimentoInimigo3();
+                    Inimigos.IntervaloMovimentoInimigo3();
 
                 if (DB.fases.ElementAt(nivelFase)._modoJogo == "FUGA") 
-                    Inimigo.IntervaloMovimentoInimigo5();
+                    Inimigos.IntervaloMovimentoInimigo5();
 
                 Mapa.ResetaSpawnsItensDoMapa();
                 Mapa.CheckMapaIsRenderizando();

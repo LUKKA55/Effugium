@@ -59,7 +59,7 @@ namespace jogoInicial
                 await AtirarFlecha(direcao, destinoPosicoes);                
             }else{
                 if(DB.todosTiposInimigo.Find(inimigo => inimigo == destinoString) != null ){
-                    int tipoInimigo = DB.todosTiposInimigo.FindIndex(inimigo => inimigo == destinoString) + 1;
+                    int tipoInimigo = DB.todosTiposInimigo.FindIndex(inimigo => inimigo == destinoString);
                     Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
 
                     Personagem.MatarInimigo((EnumInimigos)tipoInimigo);

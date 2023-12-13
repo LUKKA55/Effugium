@@ -391,7 +391,7 @@ namespace jogoInicial
                 0,
                 0,
                 2
-            ),
+            )
         };
         public static List<Item> todosTiposItens = new(){
             new("<-", new(){new(){5, 16}, new(){1, 1}, new(){5, 9}}),
@@ -401,7 +401,7 @@ namespace jogoInicial
         };
         public static string[] modelosPersonagem = { "()", "[]", "{}", "[}", "(T", "[T", "[D", "(D" };
         public static string[] modelosPersonagemComEscudo = { "[]", "[}", "[T", "[D" };
-        public static List<string> todosTiposInimigo = new(){"XX", ")(", ";;", "@@"};
+        public static List<string> todosTiposInimigo = new(){"XX", ")(", ";;","inimigo 4", "@@"};
     }
 }
 
