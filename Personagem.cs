@@ -79,25 +79,7 @@ namespace jogoInicial
             }else if(DB.todosTiposItens.FindIndex((i) => i._modelo == destino) >= 0){
                 int tipoItem = DB.todosTiposItens.FindIndex((i) => i._modelo == destino);
 
-                if(tipoItem == 0){
-                    inventario.espada._quantidade++;
-                    inventario.espada._itemNoMapa = false;
-                }
-
-                if(tipoItem == 1){
-                    inventario.escudo._quantidade++;
-                    inventario.escudo._itemNoMapa = false;
-                }
-
-                if(tipoItem == 2){
-                    inventario.picareta._quantidade++;
-                    inventario.picareta._itemNoMapa = false;
-                }
-
-                if(tipoItem == 3){
-                    inventario.arco._quantidade++;
-                    inventario.arco._itemNoMapa = false;
-                }
+                inventario.AcrescentarItemInventario((EnumItens)tipoItem);
 
                 limpaLugarAntigo(posicao);
 

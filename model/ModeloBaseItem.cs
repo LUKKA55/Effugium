@@ -39,6 +39,7 @@ namespace jogoInicial
                             spawnsDisponiveis.ElementAt(randomIndex).ElementAt(0), 
                             spawnsDisponiveis.ElementAt(randomIndex).ElementAt(1)
                         ] = DB.todosTiposItens[(int)_tipoItem]._modelo;
+                        _itemNoMapa = true;
                         break;
 
                     }else if(DB.modelosPersonagem.Contains(
@@ -54,7 +55,6 @@ namespace jogoInicial
                     }
                 }
                 
-                _itemNoMapa = true;
                 _spawnando = false;
                 Mapa.CheckMapaIsRenderizando();
             }

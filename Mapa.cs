@@ -15,10 +15,10 @@ namespace jogoInicial
             if (estaRenderizando || Game.pararRenderizacoes) {
                 return;
             }
-            VerificaSpawnItens();
             estaRenderizando = true;
             RenderizarMapa();
             estaRenderizando = false;
+            VerificaSpawnItens();
         }
         public static void MostrarMapaNormal(){
             Console.Clear(); 
@@ -32,7 +32,6 @@ namespace jogoInicial
 
             // MENSAGEM DE AVISO
         }
-        
         public static void MostraMapaEscuro() {
             List<int> posicaoUsuario = Personagem.posicaoPersonagem;
             List<List<int>> posicoesMapaRevelado = new (){
@@ -78,6 +77,18 @@ namespace jogoInicial
             }
             // MENSAGEM DE AVISO
             Personagem.inventario.MostrarInventario();
+        }
+        public static void ResetaSpawnsItensDoMapa() {
+            if(DB.fases.ElementAt(Game.nivelFase)._arco)
+                Personagem.inventario.arco._itemNoMapa = true;
+
+            if(DB.fases.ElementAt(Game.nivelFase)._picareta)
+                Personagem.inventario.picareta._itemNoMapa = true;
+
+            if(DB.fases.ElementAt(Game.nivelFase)._escudo)
+                Personagem.inventario.escudo._itemNoMapa = true;
+
+            Personagem.inventario.espada._itemNoMapa = true;
         }
 
         public static void VerificaSpawnItens() {

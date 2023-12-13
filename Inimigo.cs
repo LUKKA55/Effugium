@@ -88,6 +88,20 @@ namespace jogoInicial
                         } else {
                             Game.FaseAtual._qntInimigosTipo5++;
                         }
+
+                        int tipoItem = DB.todosTiposItens.FindIndex(i => i._modelo == destino);
+                        if(tipoItem == 0)
+                            Personagem.inventario.espada._itemNoMapa = false;
+
+                        if(tipoItem == 1)
+                            Personagem.inventario.escudo._itemNoMapa = false;
+
+                        if(tipoItem == 2)
+                            Personagem.inventario.picareta._itemNoMapa = false;
+
+                        if(tipoItem == 3)
+                            Personagem.inventario.arco._itemNoMapa = false;
+                        
                         acaoInimigo();
                         break;
                         

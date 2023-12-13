@@ -10,7 +10,6 @@
     {
         public static int nivelFase = 0;
         public static FaseStatus FaseAtual = DB.fases[nivelFase];
-        // Nivel Fase deve ficar em 0, esta assim para testes
         public static float dificuldade;
         public static ConsoleKeyInfo key;
         public static bool pararRenderizacoes = false;
@@ -52,7 +51,7 @@
             
             FaseAtual = DB.fases[nivelFase];
             Personagem.ResetPosicaoPersonagem();
-
+            Mapa.ResetaSpawnsItensDoMapa();
             Mapa.CheckMapaIsRenderizando();
         }
 
@@ -101,8 +100,6 @@
             foreach(FaseStatus fase in DB.fases) {
                 int faseAtual = nivelFase;
 
-                Personagem.inventario.espada._itemNoMapa = true;
-
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo1 > 0) 
                     Inimigo.IntervaloMovimentoInimigo();
 
@@ -115,21 +112,9 @@
                 if (DB.fases.ElementAt(nivelFase)._modoJogo == "FUGA") 
                     Inimigo.IntervaloMovimentoInimigo5();
 
-                if(DB.fases.ElementAt(nivelFase)._arco)
-                    Personagem.inventario.arco._itemNoMapa = true;
-
-                if(DB.fases.ElementAt(nivelFase)._espada)
-                    Personagem.inventario.espada._itemNoMapa = true;
-
-                if(DB.fases.ElementAt(nivelFase)._picareta)
-                    Personagem.inventario.picareta._itemNoMapa = true;
-
-                if(DB.fases.ElementAt(nivelFase)._escudo)
-                    Personagem.inventario.escudo._itemNoMapa = true;
-
-                Mapa.VerificaSpawnItens();
-            
+                Mapa.ResetaSpawnsItensDoMapa();
                 Mapa.CheckMapaIsRenderizando();
+                
                 do{
                     key = Console.ReadKey();
                     if (pararRenderizacoes) {

@@ -133,15 +133,19 @@ namespace jogoInicial
             {
                 case 0:
                     espada._quantidade++;
+                    espada._itemNoMapa = false;
                     break;
                 case 1:
                     escudo._quantidade++;
+                    escudo._itemNoMapa = false;
                     break;
                 case 2:
                     picareta._quantidade++;
+                    picareta._itemNoMapa = false;
                     break;
                 case 3:
                     arco._quantidade++;
+                    arco._itemNoMapa = false;
                     break;
             }
         }
