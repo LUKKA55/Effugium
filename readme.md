@@ -6,7 +6,7 @@
 
 - [Pendente] Deixar jogo mais informativo quanto a uso de itens, inimigos, mecanicas e etc.
 
-- [Pendente] Alinhar tela do jogo, loading etc.
+- [Pendente] Vitoria esta bugada, ao ganhar o jogo vai para proxima fase
 
 **HTML**
 - [Pendente] Salvamento de fase.

@@ -27,6 +27,8 @@ namespace jogoInicial
             new List<int>{1, 1}, // baixo - direita
         };
         public static void MovimentacaoInimigo (string tipoInimigo){
+            if(Game.telaInfoAberta) return;
+            
             int[,] posicoesInimigos = new int[Game.GetMapa().GetLength(0) * Game.GetMapa().GetLength(1), 2];
 
             int qntInimigos = 0;

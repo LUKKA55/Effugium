@@ -8,10 +8,11 @@
     }
     public class Game
     {
-        public static int nivelFase = 0;
+        public static int nivelFase = 15;
         public static FaseStatus FaseAtual = DB.fases[nivelFase];
         public static float dificuldade;
         public static ConsoleKeyInfo key;
+        public static bool telaInfoAberta = false;
         public static bool pararRenderizacoes = false;
 
         public static void CheckProximaFase() {
@@ -26,7 +27,8 @@
             );
 
             if (todosInimigoMortos) {
-                if (nivelFase == DB.fases.Count() - 1) {
+                Console.WriteLine(DB.fases.Count);
+                if (nivelFase == DB.fases.Count - 1) {
                     Vitoria();
                 } else {
                     ProximaFase();

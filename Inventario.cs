@@ -24,26 +24,23 @@ namespace jogoInicial
             if(arco._equipado)
                 Console.WriteLine("Aperte a tecla da direção que deseja atirar a flecha");
             
-            if (
-                espada._quantidade > 0 
-                || escudo._quantidade > 0 
-                || picareta._quantidade > 0 
-                || arco._quantidade > 0
-            )
-                Console.WriteLine("Inventário");
+           
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("|               Inventário             |");
             
             if (espada._quantidade > 0 )
-                Console.WriteLine(" -Espada para ataque {0}", espada._quantidade);
+                Console.WriteLine("|               {0}x Espada              |", espada._quantidade);
             
             if (escudo._quantidade > 0 )
-                Console.WriteLine(" -Escudo para defesa {0}", escudo._quantidade);
+                Console.WriteLine("|               {0}x Escudo              |", escudo._quantidade);
             
             if (picareta._quantidade > 0 )
-                Console.WriteLine(" -Picareta para quebrar parede {0}", picareta._quantidade);
+                Console.WriteLine("|               {0}x Picareta            |", picareta._quantidade);
             
             if (arco._quantidade > 0 )
-                Console.WriteLine(" -Arco para atirar flecha {0}", arco._quantidade);
-            
+                Console.WriteLine("|               {0}x Arco                |", arco._quantidade);
+
+            Console.WriteLine("----------------------------------------");
         }
         public void UsarItem(char numeroAcao){
             int acao = int.Parse(numeroAcao.ToString());

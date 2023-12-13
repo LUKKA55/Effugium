@@ -3,6 +3,12 @@ namespace jogoInicial
     public class Personagem
     {
         public static List<int> posicaoPersonagem = new (){2, 9};
+        public static List<bool> jaEncontrouOItem = new(){
+            false,
+            false,
+            false,
+            false
+        };
         public static Inventario inventario = new();
 
         public static string GetPersonagemEquipado() {  
@@ -80,6 +86,20 @@ namespace jogoInicial
                 int tipoItem = DB.todosTiposItens.FindIndex((i) => i._modelo == destino);
 
                 inventario.AcrescentarItemInventario((EnumItens)tipoItem);
+
+                if (!jaEncontrouOItem[tipoItem]) {
+                    Game.telaInfoAberta = true;
+                    jaEncontrouOItem[tipoItem] = true;
+                    
+                    ConsoleKeyInfo key;
+                    do {
+                        MostrarMensagem.InfoItem((EnumItens)tipoItem);
+                        key = Console.ReadKey();
+                    } while (key.Key != ConsoleKey.C);
+
+                    Game.telaInfoAberta = false;
+                    Mapa.CheckMapaIsRenderizando();
+                }
 
                 limpaLugarAntigo(posicao);
 

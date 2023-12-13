@@ -6,14 +6,14 @@ namespace jogoInicial
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("{0}----------------------------------------------", Game.nivelFase > 9 ? "--" : "-");
-            Console.WriteLine("{0}--------------- GAME OVER --------------------", Game.nivelFase > 9 ? "--" : "-");
-            Console.WriteLine("------------------ Fase {0} ---------------------", Game.nivelFase);
+            Console.WriteLine("{0}--------------- FIM DE JOGO ------------------", Game.nivelFase > 9 ? "--" : "-");
+            Console.WriteLine("------------------ FASE {0} ---------------------", Game.nivelFase);
             Console.WriteLine("");
         }
         public static void NextLevel(){
             Console.Clear();
             Console.WriteLine("");
-            Console.WriteLine("{0}--------------------- NEXT ------------------------", Game.nivelFase > 9 ? "--" : "-");
+            Console.WriteLine("{0}-------------------- PRÓXIMO ----------------------", Game.nivelFase > 9 ? "--" : "-");
             Console.WriteLine("--------------------- LEVEL {0} ----------------------", Game.nivelFase);
             Console.WriteLine("{0}-------------------    -->    ---------------------", Game.nivelFase > 9 ? "--" : "-");
             Console.WriteLine("");
@@ -21,7 +21,7 @@ namespace jogoInicial
         public static void Exit(){
             Console.Clear();
             Console.WriteLine("");
-            Console.WriteLine("{0}---------------- GOOD BYE ---------------------", Game.nivelFase > 9 ? "--" : "-");
+            Console.WriteLine("{0}---------------- ATÉ A PRÓXIMA ----------------", Game.nivelFase > 9 ? "--" : "-");
             Console.WriteLine("------------------ FASE {0} ----------------------", Game.nivelFase);
             Console.WriteLine("{0}-----------------------------------------------", Game.nivelFase > 9 ? "--" : "-");
             Console.WriteLine("");
@@ -30,14 +30,14 @@ namespace jogoInicial
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("---------------------------------------------------");
-            Console.WriteLine("----------------------  WIN  ----------------------");
+            Console.WriteLine("---------------------  VENCEU  --------------------");
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine("");
         }
         public static void Start(){
             Console.WriteLine("");
-            Console.WriteLine("-------------- SELECT A DIFFICULTY ----------------");
-            Console.WriteLine("------------ EASY -- MEDIUM -- HARD ---------------");
+            Console.WriteLine("------------- SELECIONE A DIFUCULDADE -------------");
+            Console.WriteLine("----------- FÁCIL -- MÉDIO -- DIFÍCIL -------------");
             Console.WriteLine("------------ (1) ---- (2) ---- (3) ----------------");
             Console.WriteLine("");
         }
@@ -45,8 +45,44 @@ namespace jogoInicial
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("---------------------------------------------------");
-            Console.WriteLine("------------ CHOOSE A VALID DIFFICULTY ------------");
+            Console.WriteLine("---------- ESCOLHA UMA DIFICULDADE VÁLIDA ---------");
             Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine("");
+        }
+
+        public static void InfoItem(EnumItens tipoItem) {
+            Console.Clear();
+            Console.WriteLine("");
+            switch(tipoItem) {
+                case EnumItens.espada:
+                    Console.WriteLine("----------- NOVO ITEM: ESPADA | <- | -------------");
+                    Console.WriteLine("Você encontrou uma espada, ative-a pressionando");
+                    Console.WriteLine("a tecla 1 para que seus próximos 10 pulos");
+                    Console.WriteLine("possam matar um único inimigo que estiver em seu");
+                    Console.WriteLine("caminho.");
+                break;
+                case EnumItens.escudo:
+                    Console.WriteLine("----------- NOVO ITEM: ESCUDO | <> | -------------");
+                    Console.WriteLine("Você encontrou um escudo, ative-o pressionando");
+                    Console.WriteLine("a tecla 2 para que fique protegido de um único");
+                    Console.WriteLine("ataque.");
+                break;
+                case EnumItens.picareta:
+                    Console.WriteLine("---------- NOVO ITEM: PICARETA | T  | ------------");
+                    Console.WriteLine("Você encontrou uma picareta, ative-a pressionando");
+                    Console.WriteLine("a tecla 3 para que a proxima parede que estiver em");
+                    Console.WriteLine("seu caminho seja destruida, paredes laterais");
+                    Console.WriteLine("do mapa só podem ser destruidas casos estejam");
+                    Console.WriteLine("rachadas, sendo elas // ou ~~");
+                break;  
+                case EnumItens.arco:
+                    Console.WriteLine("-------- NOVO ITEM: ARCO | D- | ----------");
+                    Console.WriteLine("Você encontrou um arco, equipe-o pressionando");
+                    Console.WriteLine("a tecla 4 para que a proxima tecla de");
+                    Console.WriteLine("movimento dispare uma unica flecha.");
+                break;                              
+            }
+            Console.WriteLine("----------------- [C] CONTINUAR ------------------");
             Console.WriteLine("");
         }
     }

@@ -12,7 +12,7 @@ namespace jogoInicial
            }
         }
         public static void CheckMapaIsRenderizando() {
-            if (estaRenderizando || Game.pararRenderizacoes) {
+            if (estaRenderizando || Game.pararRenderizacoes || Game.telaInfoAberta) {
                 return;
             }
             estaRenderizando = true;
