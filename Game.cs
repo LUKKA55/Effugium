@@ -8,7 +8,7 @@
     }
     public class Game
     {
-        public static int nivelFase = 15;
+        public static int nivelFase = 7;
         public static FaseStatus FaseAtual = DB.fases[nivelFase];
         public static float dificuldade;
         public static ConsoleKeyInfo key;
@@ -26,8 +26,11 @@
                 (qntInimigo) => qntInimigo <= 0
             );
 
-            if (todosInimigoMortos) {
-                Console.WriteLine(DB.fases.Count);
+            bool jogadorFugiuDoMapa = 
+                !(Personagem.posicaoPersonagem[0] > 0 && Personagem.posicaoPersonagem[0] < GetMapa().GetLength(0)-1 
+                && Personagem.posicaoPersonagem[1] > 0 && Personagem.posicaoPersonagem[1] < GetMapa().GetLength(1)-1);
+
+            if (todosInimigoMortos || jogadorFugiuDoMapa) {
                 if (nivelFase == DB.fases.Count - 1) {
                     Vitoria();
                 } else {
@@ -111,7 +114,7 @@
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo3 > 0) 
                     Inimigos.IntervaloMovimentoInimigo3();
 
-                if (DB.fases.ElementAt(nivelFase)._modoJogo == "FUGA") 
+                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo5 > 0)  
                     Inimigos.IntervaloMovimentoInimigo5();
 
                 Mapa.ResetaSpawnsItensDoMapa();

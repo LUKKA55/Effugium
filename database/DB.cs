@@ -211,7 +211,7 @@ namespace jogoInicial
                 false,
                 true,
                 false,
-                "NORMAL",
+                "FUGA",
                 14
             ),
             // Fase #09
@@ -404,6 +404,8 @@ namespace jogoInicial
         public static List<string> todosTiposInimigo = new(){"XX", ")(", ";;","inimigo 4", "@@"};
     }
 }
+
+// çç -> ¢¢ -> $$ -> §§
 
 //Informações Uteis
 

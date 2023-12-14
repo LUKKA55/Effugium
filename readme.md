@@ -1,13 +1,8 @@
 **Task**
+- [Pendente] Inimigo caçador (caça inimigos "XX" e fica mais forte) (mensagem informando o level).
 
-- [Pendente] Criar item Pulo (anda 2 casas).
-
-- [Pendente] Inimigo Boss (caça inimigos "XX" e fica mais forte).
-
-- [Pendente] Deixar jogo mais informativo quanto a uso de itens, inimigos, mecanicas e etc.
-
-- [Pendente] Vitoria esta bugada, ao ganhar o jogo vai para proxima fase
-
+- [Pendente] Inimigo atirador.
+ 
 **HTML**
 - [Pendente] Salvamento de fase.
 

@@ -72,15 +72,10 @@ namespace jogoInicial
 
                 Game.GetMapa()[variacaoPosicao[0],variacaoPosicao[1]] = GetPersonagemEquipado();    
 
-                if(
-                    !(variacaoPosicao[0] > 0 && variacaoPosicao[0] < Game.GetMapa().GetLength(0)-1 && 
-                    variacaoPosicao[1] > 0 && variacaoPosicao[1] < Game.GetMapa().GetLength(1)-1)
-                ) {
-                    Game.ProximaFase();
-                } else  {
-                    posicaoPersonagem[0] = variacaoPosicao[0];
-                    posicaoPersonagem[1] = variacaoPosicao[1];
-                }
+                posicaoPersonagem[0] = variacaoPosicao[0];
+                posicaoPersonagem[1] = variacaoPosicao[1];
+                
+                Game.CheckProximaFase();
 
             }else if(DB.todosTiposItens.FindIndex((i) => i._modelo == destino) >= 0){
                 int tipoItem = DB.todosTiposItens.FindIndex((i) => i._modelo == destino);

@@ -15,6 +15,7 @@ namespace jogoInicial
             Console.WriteLine("");
             Console.WriteLine("{0}-------------------- PRÓXIMO ----------------------", Game.nivelFase > 9 ? "--" : "-");
             Console.WriteLine("--------------------- LEVEL {0} ----------------------", Game.nivelFase);
+            LevelTip();
             Console.WriteLine("{0}-------------------    -->    ---------------------", Game.nivelFase > 9 ? "--" : "-");
             Console.WriteLine("");
         }
@@ -48,6 +49,17 @@ namespace jogoInicial
             Console.WriteLine("---------- ESCOLHA UMA DIFICULDADE VÁLIDA ---------");
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine("");
+        }
+
+        public static void LevelTip() {
+            switch(Game.nivelFase) {
+                case 8: //1º Fase de Fuga contra varios XX
+                case 10: //1º Fase de Fuga Inimigo "@"
+                    Console.WriteLine("{0}----- DICA: Fugir as vezes é a melhor opção, ------", Game.nivelFase > 9 ? "--" : "-");
+                    Console.WriteLine("{0}----- quebrar paredes laterais rachadas      ------", Game.nivelFase > 9 ? "--" : "-");
+                    Console.WriteLine("{0}----- resulta em vitória!                    ------", Game.nivelFase > 9 ? "--" : "-");
+                break;
+            }
         }
 
         public static void InfoItem(EnumItens tipoItem) {
