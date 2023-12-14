@@ -6,7 +6,7 @@ namespace jogoInicial
         static string limpaLugarAntigoFlecha(List<int> posicao) => 
             Game.GetMapa()[posicao[0], posicao[1]] = "  ";
 
-        public async Task AtirarFlecha(Direcao direcao, List<int> posicaoFlecha) {
+        public async Task AtirarFlecha(enumDirecao direcao, List<int> posicaoFlecha) {
             List<int> destinoPosicoes = new List<int>(posicaoFlecha);
 
             if (
@@ -20,43 +20,55 @@ namespace jogoInicial
             }
 
             switch (direcao) {
-                case Direcao.Cima:
+                case enumDirecao.Cima:
                     destinoPosicoes[0] = posicaoFlecha[0]-1;
                 break;
-                case Direcao.Baixo:
+                case enumDirecao.Baixo:
                     destinoPosicoes[0] = posicaoFlecha[0]+1;
                 break;
-                case Direcao.Direita:
+                case enumDirecao.Direita:
                     destinoPosicoes[1] = posicaoFlecha[1]+1;
                 break; 
-                case Direcao.Esquerda:
+                case enumDirecao.Esquerda:
                     destinoPosicoes[1] = posicaoFlecha[1]-1;
                 break;       
             }
             
             string destinoString = Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]];
 
+            if (
+                destinoString == "::"
+                || Game.GetMapa()[posicaoFlecha[0], posicaoFlecha[1]] == "::"
+            ) {
+                Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
+                limpaLugarAntigoFlecha(posicaoFlecha);
+                Mapa.CheckMapaIsRenderizando();       
+                return;  
+            }
+
             if (destinoString == "  ") {
                 if (!DB.modelosPersonagem.Contains(Game.GetMapa()[posicaoFlecha[0], posicaoFlecha[1]])) {
                     limpaLugarAntigoFlecha(posicaoFlecha);
                 }
                 switch (direcao) {
-                    case Direcao.Cima:
+                    case enumDirecao.Cima:
                         Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = " i";
                     break;
-                    case Direcao.Baixo:
+                    case enumDirecao.Baixo:
                         Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = " !";
                     break;
-                    case Direcao.Direita:
+                    case enumDirecao.Direita:
                         Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = "--";
                     break; 
-                    case Direcao.Esquerda:
+                    case enumDirecao.Esquerda:
                         Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = "--";
                     break;                                      
                 }
                 Mapa.CheckMapaIsRenderizando();
                 await Task.Delay(650);
-                await AtirarFlecha(direcao, destinoPosicoes);                
+                if (Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] != "  ") {
+                    await AtirarFlecha(direcao, destinoPosicoes);   
+                }               
             }else{
                 if(DB.todosTiposInimigo.Find(inimigo => inimigo == destinoString) != null ){
                     int tipoInimigo = DB.todosTiposInimigo.FindIndex(inimigo => inimigo == destinoString);
@@ -76,6 +88,7 @@ namespace jogoInicial
                         Environment.Exit(0);
                     };
                 };
+                
                 limpaLugarAntigoFlecha(posicaoFlecha);
                 Mapa.CheckMapaIsRenderizando();         
             }        

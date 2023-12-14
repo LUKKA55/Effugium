@@ -10,6 +10,7 @@ namespace jogoInicial
     public class Inimigos
     {
         // Variacao da movimentação do inimigo
+        static public bool turnoInimigo4Atira = true;
         static public List<List<int>> altPosicaoNormal = new List<List<int>>{
             new List<int>{-1, 0}, // cima
             new List<int>{1, 0}, // baixo
@@ -48,7 +49,18 @@ namespace jogoInicial
 
             int limitaMovimento = tipoInimigo == ";;" ? 0 : 4;
 
+            if (tipoInimigo == "(>") 
+                turnoInimigo4Atira = !turnoInimigo4Atira;
+
             for(int i = 0; i < qntInimigos; i++){
+                enumDirecao direcaoProjetil = enumDirecao.Direita;
+
+                bool inimigoTemVisaoJogador = VerificaInimigoTemVisaoJogador(new int[2]{ posicoesInimigos[i, 0], posicoesInimigos[i, 1] }, ref direcaoProjetil);
+                // se for true && turnoInimigo4Atira for true tbm, não se movimenta, somente atira na direcao
+                if (inimigoTemVisaoJogador && turnoInimigo4Atira) {
+                    AtirarProjetil(direcaoProjetil, new List<int>{ posicoesInimigos[i, 0], posicoesInimigos[i, 1] });
+                    continue;
+                }
                 var numeroAleatorio = new Random();
                 List<List<int>> cloneAltPosicao = new List<List<int>>(
                     tipoInimigo == ";;" 
@@ -70,7 +82,7 @@ namespace jogoInicial
                             cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(1) + posicoesInimigos[i, 1]
                         ] = destroiItem 
                             ? 
-                            "()" 
+                            Personagem.GetPersonagemEquipado() 
                             : 
                             tipoInimigo;
                     
@@ -100,44 +112,160 @@ namespace jogoInicial
                         acaoInimigo();
                         break;
                         
-                    } else if(destino == "[}"){
-                        // Procura inimigo nos tipos para matar, precisa de index NAO aparencia
-                        int idtipoInimigo = DB.todosTiposInimigo.FindIndex(inimigo => inimigo == tipoInimigo);
-                        Personagem.MatarInimigo((EnumInimigos)idtipoInimigo);
-                        Personagem.inventario.escudo._equipado = false;
-                        Personagem.inventario.espada.nmrPuloAtaqueValido = 0;
-                        acaoInimigo(true);
-                        limpaLugarAntigoInimigo(posicoesInimigos, i);
-                        break;
-
-                    } else if(destino == "{}"){
-                        int idtipoInimigo = DB.todosTiposInimigo.FindIndex(inimigo => inimigo == tipoInimigo);
-                        Personagem.MatarInimigo((EnumInimigos)idtipoInimigo);
-                        Personagem.inventario.espada.nmrPuloAtaqueValido = 0;
-                        acaoInimigo(true);
-                        limpaLugarAntigoInimigo(posicoesInimigos, i);
-                        break;
-
-                    } else if(destino == "[]"){
-                        Personagem.inventario.escudo._equipado = false;
-                        acaoInimigo(true);
-                        break;
-                        
-                    } else if(destino == "()"){
-                        if (tipoInimigo != "@@") {
-                            limpaLugarAntigoInimigo(posicoesInimigos, i);
+                    } else if (DB.modelosPersonagem.Contains(destino)) {
+                        if(DB.modelosPersonagemComEscudo.Contains(destino)){
+                            Personagem.inventario.escudo._equipado = false;
+                            acaoInimigo(true);
+                            break;   
+                        } else {
+                            if (tipoInimigo != "@@") {
+                                limpaLugarAntigoInimigo(posicoesInimigos, i);
+                            }
+                            acaoInimigo();
+                            Mapa.CheckMapaIsRenderizando();
+                            MostrarMensagem.GameOver();
+                            Environment.Exit(0);
                         }
-                        acaoInimigo();
-                        Mapa.CheckMapaIsRenderizando();
-                        MostrarMensagem.GameOver();
-                        Environment.Exit(0);
-                        
                     } else {
                         cloneAltPosicao.RemoveAt(idxAleatorio);
                     }
                 };
             }
             Mapa.CheckMapaIsRenderizando();
+        }
+
+        public static bool VerificaInimigoTemVisaoJogador(int[] posicaoInimigo, ref enumDirecao direcaoProjetil){
+            if(
+                posicaoInimigo[0] == Personagem.posicaoPersonagem[0] || 
+                posicaoInimigo[1] == Personagem.posicaoPersonagem[1]
+            ){
+                int posicaoInicial;
+                int posicaoFinal;
+                bool estaoMesmaLinha = false;
+                int posicaoLinhaOuColuna;
+                // Verifica se está na mesma linha
+                if (posicaoInimigo[0] == Personagem.posicaoPersonagem[0]) {
+                    posicaoInicial = posicaoInimigo[1];
+                    posicaoFinal = Personagem.posicaoPersonagem[1];
+                    estaoMesmaLinha = true;
+                    posicaoLinhaOuColuna = posicaoInimigo[0];
+
+                // Verifica se está na mesma coluna
+                } else {
+                    posicaoInicial = posicaoInimigo[0];
+                    posicaoFinal = Personagem.posicaoPersonagem[0];
+                    posicaoLinhaOuColuna = posicaoInimigo[1];
+                }
+
+                bool posicaoFinalMaiorQueInicial = posicaoFinal > posicaoInicial;
+
+                // Atribui direcao a variavel baseado na posicaoFinalMaiorQueInicial e estaoMesmaLinha
+                if (estaoMesmaLinha) {
+                    direcaoProjetil = posicaoFinalMaiorQueInicial ? enumDirecao.Direita : enumDirecao.Esquerda;
+                } else {
+                    direcaoProjetil = posicaoFinalMaiorQueInicial ? enumDirecao.Baixo : enumDirecao.Cima;
+                }
+
+                bool LocalEstaVazio(int p) {
+                    if (estaoMesmaLinha) {
+                        return Game.FaseAtual._mapa[posicaoLinhaOuColuna, p] == "  ";
+                    }
+                    return Game.FaseAtual._mapa[p, posicaoLinhaOuColuna] == "  ";
+                }
+
+                // acrescenta no for até chegar na final
+                if(posicaoFinalMaiorQueInicial){
+                    for (int p = posicaoInicial+1; p < posicaoFinal; p++) {
+                        if (!LocalEstaVazio(p)) {
+                            return false;
+                        }
+                    }
+
+                // diminui no for até chegar na final
+                }else{
+                    for (int p = posicaoInicial-1; p > posicaoFinal; p--) {
+                        if (!LocalEstaVazio(p)) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+        public static async Task AtirarProjetil(enumDirecao direcao, List<int> posicaoProjetil) {
+            static string limpaLugarAntigoProjetil(List<int> posicao) => 
+                Game.GetMapa()[posicao[0], posicao[1]] = "  ";
+
+            List<int> destinoPosicoes = new List<int>(posicaoProjetil);
+
+            if (
+                destinoPosicoes[0] == Game.GetMapa().GetLength(0) - 1
+                || destinoPosicoes[1] == Game.GetMapa().GetLength(1) - 1
+                || destinoPosicoes[0] == 0
+                || destinoPosicoes[1] == 0
+            ) {
+                limpaLugarAntigoProjetil(posicaoProjetil);
+                return;
+            }
+
+            switch (direcao) {
+                case enumDirecao.Cima:
+                    destinoPosicoes[0] = posicaoProjetil[0]-1;
+                break;
+                case enumDirecao.Baixo:
+                    destinoPosicoes[0] = posicaoProjetil[0]+1;
+                break;
+                case enumDirecao.Direita:
+                    destinoPosicoes[1] = posicaoProjetil[1]+1;
+                break; 
+                case enumDirecao.Esquerda:
+                    destinoPosicoes[1] = posicaoProjetil[1]-1;
+                break;       
+            }
+            
+            string destinoString = Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]];
+
+            if (
+                DB.modelosFlechas.Contains(destinoString)
+                || DB.modelosFlechas.Contains(Game.GetMapa()[posicaoProjetil[0], posicaoProjetil[1]])
+            ) {
+                Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
+                limpaLugarAntigoProjetil(posicaoProjetil);
+                Mapa.CheckMapaIsRenderizando();       
+                return;  
+            }
+
+
+            if (destinoString == "  ") {
+                if (Game.GetMapa()[posicaoProjetil[0], posicaoProjetil[1]] != "(>") {
+                    limpaLugarAntigoProjetil(posicaoProjetil);
+                }
+                Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = "::";
+
+                Mapa.CheckMapaIsRenderizando();
+                await Task.Delay(300);
+                if (Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] != "  ") {
+                    await AtirarProjetil(direcao, destinoPosicoes);   
+                }               
+            }else{
+                if(DB.modelosPersonagem.Contains(destinoString)) {
+                    if(DB.modelosPersonagemComEscudo.Contains(destinoString)){
+                        Personagem.inventario.escudo._equipado = false;
+                        Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = Personagem.GetPersonagemEquipado();
+
+                    } else {
+                        MostrarMensagem.GameOver();
+                        Environment.Exit(0);
+                    }
+
+                }else if(DB.todosTiposItens.FindIndex((i) => i._modelo == destinoString) >= 0){
+                    Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
+                }
+
+                limpaLugarAntigoProjetil(posicaoProjetil);
+                Mapa.CheckMapaIsRenderizando();         
+            }        
         }
         public static async Task IntervaloMovimentoInimigo(){
             if (Game.FaseAtual._qntInimigosTipo1 > 0) {              
@@ -158,6 +286,13 @@ namespace jogoInicial
                 await Task.Delay((int)(1200 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo3]);
                 await IntervaloMovimentoInimigo3();  
+            }
+        }
+        public static async Task IntervaloMovimentoInimigo4(){
+            if (Game.FaseAtual._qntInimigosTipo4 > 0) {              
+                await Task.Delay((int)(1500 * Game.dificuldade));
+                MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo4]);
+                await IntervaloMovimentoInimigo4();  
             }
         }
         public static async Task IntervaloMovimentoInimigo5(){

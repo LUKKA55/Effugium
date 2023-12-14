@@ -27,7 +27,7 @@ namespace jogoInicial
             
             return personagemAtualizado;
         }
-        public static void Movimentacao(Direcao direcao){
+        public static void Movimentacao(enumDirecao direcao){
             int[] posicao = new int[2];
             for (int i = 0; i < Game.GetMapa().GetLength(0); i++){
                 for (int j = 0; j < Game.GetMapa().GetLength(1); j++){

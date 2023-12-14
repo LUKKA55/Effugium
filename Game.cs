@@ -1,6 +1,6 @@
 ﻿namespace jogoInicial
 {
-    public enum Direcao {
+    public enum enumDirecao {
         Cima = 1,
         Esquerda,
         Baixo,
@@ -8,7 +8,7 @@
     }
     public class Game
     {
-        public static int nivelFase = 7;
+        public static int nivelFase = 16;
         public static FaseStatus FaseAtual = DB.fases[nivelFase];
         public static float dificuldade;
         public static ConsoleKeyInfo key;
@@ -114,6 +114,9 @@
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo3 > 0) 
                     Inimigos.IntervaloMovimentoInimigo3();
 
+                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo4 > 0) 
+                    Inimigos.IntervaloMovimentoInimigo4();
+
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo5 > 0)  
                     Inimigos.IntervaloMovimentoInimigo5();
 
@@ -126,16 +129,16 @@
                         continue;
                     }
                     if(key.Key == ConsoleKey.W || key.Key == ConsoleKey.UpArrow){
-                        Personagem.Movimentacao(Direcao.Cima);
+                        Personagem.Movimentacao(enumDirecao.Cima);
                     }
                     if(key.Key == ConsoleKey.A || key.Key == ConsoleKey.LeftArrow){
-                        Personagem.Movimentacao(Direcao.Esquerda);
+                        Personagem.Movimentacao(enumDirecao.Esquerda);
                     }
                     if(key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow){
-                        Personagem.Movimentacao(Direcao.Baixo);
+                        Personagem.Movimentacao(enumDirecao.Baixo);
                     }
                     if(key.Key == ConsoleKey.D || key.Key == ConsoleKey.RightArrow){
-                        Personagem.Movimentacao(Direcao.Direita);
+                        Personagem.Movimentacao(enumDirecao.Direita);
                     }
                     if(char.IsDigit(key.KeyChar)){
                         Personagem.inventario.UsarItem(key.KeyChar);
