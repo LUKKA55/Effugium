@@ -29,7 +29,6 @@ namespace jogoInicial
         };
         public static void MovimentacaoInimigo (string tipoInimigo){
             if(Game.telaInfoAberta) return;
-            
             int[,] posicoesInimigos = new int[Game.GetMapa().GetLength(0) * Game.GetMapa().GetLength(1), 2];
 
             int qntInimigos = 0;
@@ -57,10 +56,11 @@ namespace jogoInicial
 
                 bool inimigoTemVisaoJogador = VerificaInimigoTemVisaoJogador(new int[2]{ posicoesInimigos[i, 0], posicoesInimigos[i, 1] }, ref direcaoProjetil);
                 // se for true && turnoInimigo4Atira for true tbm, não se movimenta, somente atira na direcao
-                if (inimigoTemVisaoJogador && turnoInimigo4Atira) {
+                if (inimigoTemVisaoJogador && turnoInimigo4Atira && tipoInimigo == "(>") {
                     AtirarProjetil(direcaoProjetil, new List<int>{ posicoesInimigos[i, 0], posicoesInimigos[i, 1] });
                     continue;
                 }
+
                 var numeroAleatorio = new Random();
                 List<List<int>> cloneAltPosicao = new List<List<int>>(
                     tipoInimigo == ";;" 
@@ -168,9 +168,9 @@ namespace jogoInicial
 
                 bool LocalEstaVazio(int p) {
                     if (estaoMesmaLinha) {
-                        return Game.FaseAtual._mapa[posicaoLinhaOuColuna, p] == "  ";
+                        return Game.GetMapa()[posicaoLinhaOuColuna, p] == "  ";
                     }
-                    return Game.FaseAtual._mapa[p, posicaoLinhaOuColuna] == "  ";
+                    return Game.GetMapa()[p, posicaoLinhaOuColuna] == "  ";
                 }
 
                 // acrescenta no for até chegar na final
@@ -231,7 +231,9 @@ namespace jogoInicial
                 || DB.modelosFlechas.Contains(Game.GetMapa()[posicaoProjetil[0], posicaoProjetil[1]])
             ) {
                 Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
-                limpaLugarAntigoProjetil(posicaoProjetil);
+                if (Game.GetMapa()[posicaoProjetil[0], posicaoProjetil[1]] != "(>") {
+                    limpaLugarAntigoProjetil(posicaoProjetil); 
+                }
                 Mapa.CheckMapaIsRenderizando();       
                 return;  
             }
@@ -263,7 +265,9 @@ namespace jogoInicial
                     Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
                 }
 
-                limpaLugarAntigoProjetil(posicaoProjetil);
+                if (Game.GetMapa()[posicaoProjetil[0], posicaoProjetil[1]] != "(>") {
+                    limpaLugarAntigoProjetil(posicaoProjetil); 
+                }
                 Mapa.CheckMapaIsRenderizando();         
             }        
         }

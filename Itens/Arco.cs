@@ -41,7 +41,9 @@ namespace jogoInicial
                 || Game.GetMapa()[posicaoFlecha[0], posicaoFlecha[1]] == "::"
             ) {
                 Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
-                limpaLugarAntigoFlecha(posicaoFlecha);
+                if (!DB.modelosPersonagem.Contains(Game.GetMapa()[posicaoFlecha[0], posicaoFlecha[1]])) {
+                    limpaLugarAntigoFlecha(posicaoFlecha);   
+                }
                 Mapa.CheckMapaIsRenderizando();       
                 return;  
             }
@@ -70,7 +72,7 @@ namespace jogoInicial
                     await AtirarFlecha(direcao, destinoPosicoes);   
                 }               
             }else{
-                if(DB.todosTiposInimigo.Find(inimigo => inimigo == destinoString) != null ){
+                if(DB.todosTiposInimigo.Contains(destinoString)){
                     int tipoInimigo = DB.todosTiposInimigo.FindIndex(inimigo => inimigo == destinoString);
                     Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
 
@@ -89,7 +91,9 @@ namespace jogoInicial
                     };
                 };
                 
-                limpaLugarAntigoFlecha(posicaoFlecha);
+                if (!DB.modelosPersonagem.Contains(Game.GetMapa()[posicaoFlecha[0], posicaoFlecha[1]])) {
+                    limpaLugarAntigoFlecha(posicaoFlecha);   
+                }
                 Mapa.CheckMapaIsRenderizando();         
             }        
         }

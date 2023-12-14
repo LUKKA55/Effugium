@@ -8,7 +8,7 @@
     }
     public class Game
     {
-        public static int nivelFase = 16;
+        public static int nivelFase = 0;
         public static FaseStatus FaseAtual = DB.fases[nivelFase];
         public static float dificuldade;
         public static ConsoleKeyInfo key;

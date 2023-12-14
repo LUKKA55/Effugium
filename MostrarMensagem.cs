@@ -59,6 +59,9 @@ namespace jogoInicial
                     Console.WriteLine("{0}----- quebrar paredes laterais rachadas      ------", Game.nivelFase > 9 ? "--" : "-");
                     Console.WriteLine("{0}----- resulta em vitória!                    ------", Game.nivelFase > 9 ? "--" : "-");
                 break;
+                case 19: //Fase não da respawn de picareta
+                    Console.WriteLine("{0}------ DICA: Nem sempre os itens reaparecem! ------", Game.nivelFase > 9 ? "--" : "-");
+                break;
             }
         }
 
