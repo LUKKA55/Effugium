@@ -1,7 +1,6 @@
 namespace jogoInicial
 {
-    public class MostrarMensagem
-    {
+    public class MostrarMensagem {
         public static void GameOver(){
             Console.Clear();
             Console.WriteLine("");
@@ -55,12 +54,20 @@ namespace jogoInicial
             switch(Game.nivelFase) {
                 case 8: //1º Fase de Fuga contra varios XX
                 case 10: //1º Fase de Fuga Inimigo "@"
-                    Console.WriteLine("{0}----- DICA: Fugir as vezes é a melhor opção, ------", Game.nivelFase > 9 ? "--" : "-");
-                    Console.WriteLine("{0}----- quebrar paredes laterais rachadas      ------", Game.nivelFase > 9 ? "--" : "-");
-                    Console.WriteLine("{0}----- resulta em vitória!                    ------", Game.nivelFase > 9 ? "--" : "-");
+                    Console.WriteLine("------ DICA: Fugir as vezes é a melhor opção, -------");
+                    Console.WriteLine("------ quebrar paredes laterais rachadas      -------");
+                    Console.WriteLine("------ resulta em vitória!                    -------");
+                break;
+                case 16: //1º Fase com Inimigo Evolutivo
+                    Console.WriteLine("------- DICA: Alguns inimigos podem evoluir! --------");
                 break;
                 case 19: //Fase não da respawn de picareta
-                    Console.WriteLine("{0}------ DICA: Nem sempre os itens reaparecem! ------", Game.nivelFase > 9 ? "--" : "-");
+                    Console.WriteLine("------- DICA: Nem sempre os itens reaparecem! -------");
+                break;
+                case 20: //Ultima Fase
+                    Console.WriteLine("------- DICA: Tirar vantagem do seu inimigo   -------");
+                    Console.WriteLine("------- as vezes pode ser melhor que só       -------");
+                    Console.WriteLine("------- elimina-lo!                           -------");
                 break;
             }
         }

@@ -5,10 +5,14 @@ namespace jogoInicial
         tipo2,
         tipo3,
         tipo4,
-        tipo5
+        tipo5,
+        //Inimigo Evolutivo
+        tipo6,
+        tipo7,
+        tipo8,
+        tipo9
     }
-    public class Inimigos
-    {
+    public class Inimigos {
         // Variacao da movimentação do inimigo
         static public bool turnoInimigo4Atira = true;
         static public List<List<int>> altPosicaoNormal = new List<List<int>>{
@@ -27,6 +31,8 @@ namespace jogoInicial
             new List<int>{1, -1}, // baixo - esquerda
             new List<int>{1, 1}, // baixo - direita
         };
+        static string LimpaLugarAntigoInimigo(int[,] posicaoInimigo, int i) => 
+                Game.GetMapa()[posicaoInimigo[i, 0], posicaoInimigo[i, 1]] = "  ";
         public static void MovimentacaoInimigo (string tipoInimigo){
             if(Game.telaInfoAberta) return;
             int[,] posicoesInimigos = new int[Game.GetMapa().GetLength(0) * Game.GetMapa().GetLength(1), 2];
@@ -43,11 +49,6 @@ namespace jogoInicial
                 }
             }
 
-            static string limpaLugarAntigoInimigo(int[,] posicaoInimigo, int i) => 
-                Game.GetMapa()[posicaoInimigo[i, 0], posicaoInimigo[i, 1]] = "  ";
-
-            int limitaMovimento = tipoInimigo == ";;" ? 0 : 4;
-
             if (tipoInimigo == "(>") 
                 turnoInimigo4Atira = !turnoInimigo4Atira;
 
@@ -63,12 +64,75 @@ namespace jogoInicial
 
                 var numeroAleatorio = new Random();
                 List<List<int>> cloneAltPosicao = new List<List<int>>(
-                    tipoInimigo == ";;" 
+                    tipoInimigo == ";;" || DB.inimigosEvolutivos.FindIndex(e => e == tipoInimigo) > 0
                     ? altPosicaoComDiagonal
                     : altPosicaoNormal
                 );
-                
                 int qntTentativas = cloneAltPosicao.Count;
+                
+                bool inimigoPodeEvoluir = 
+                    DB.inimigosEvolutivos.FindIndex(i => i == tipoInimigo) > -1 
+                    && DB.inimigosEvolutivos.FindIndex(i => i == tipoInimigo) < 3;
+
+                //Inimigo Evolutivo tenta caçar um "XX"
+                if(inimigoPodeEvoluir){
+                    bool cacouInimigo = false;
+                    for(int c = 0; c < qntTentativas; c++) {
+                        int idxAleatorio = numeroAleatorio.Next(0, cloneAltPosicao.Count);
+                        string destino = Game.GetMapa()[
+                            cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(0) + posicoesInimigos[i, 0],
+                            cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(1) + posicoesInimigos[i, 1]
+                        ];
+
+                        if(destino == "XX"){
+                            LimpaLugarAntigoInimigo(posicoesInimigos, i);
+                            string versaoEvoluida = "§§";
+
+                            switch(tipoInimigo) {
+                                case "çç":
+                                    versaoEvoluida = "¢¢";
+                                    bool jaExistemInimigos7 = Game.FaseAtual._qntInimigosTipo7 > 0;
+                                    Game.FaseAtual._qntInimigosTipo7++;
+                                    Game.FaseAtual._qntInimigosTipo6--;
+                                    if(!jaExistemInimigos7) {
+                                        Inimigos.IntervaloMovimentoInimigo7();
+                                    }
+                                break;
+                                case "¢¢":
+                                    versaoEvoluida = "$$";
+                                    bool jaExistemInimigos8 = Game.FaseAtual._qntInimigosTipo8 > 0;
+                                    Game.FaseAtual._qntInimigosTipo8++;
+                                    Game.FaseAtual._qntInimigosTipo7--;
+                                    if(!jaExistemInimigos8) {
+                                        Inimigos.IntervaloMovimentoInimigo8();
+                                    }
+                                break;
+                                case "$$":
+                                    versaoEvoluida = "§§";
+                                    bool jaExistemInimigos9 = Game.FaseAtual._qntInimigosTipo9 > 0;
+                                    Game.FaseAtual._qntInimigosTipo9++;
+                                    Game.FaseAtual._qntInimigosTipo8--;
+                                    if(!jaExistemInimigos9) {
+                                        Inimigos.IntervaloMovimentoInimigo9();
+                                    }
+                                break;
+                            }
+
+                            Game.FaseAtual._qntInimigosTipo1--;
+                            Game.GetMapa()[
+                                cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(0) + posicoesInimigos[i, 0],
+                                cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(1) + posicoesInimigos[i, 1]
+                            ] = versaoEvoluida;
+
+                            cacouInimigo = true;
+                            break;
+                        }
+                    }
+                    
+                    if (cacouInimigo)
+                        continue;
+                }
+                
                 for(int c = 0; c < qntTentativas; c++) {
                     int idxAleatorio = numeroAleatorio.Next(0, cloneAltPosicao.Count);
                     string destino = Game.GetMapa()[
@@ -91,7 +155,7 @@ namespace jogoInicial
                         DB.todosTiposItens.FindIndex(i => i._modelo == destino) >= 0
                     ){
                         if (tipoInimigo != "@@") {
-                            limpaLugarAntigoInimigo(posicoesInimigos, i);
+                            LimpaLugarAntigoInimigo(posicoesInimigos, i);
                         } else {
                             Game.FaseAtual._qntInimigosTipo5++;
                         }
@@ -119,13 +183,25 @@ namespace jogoInicial
                             break;   
                         } else {
                             if (tipoInimigo != "@@") {
-                                limpaLugarAntigoInimigo(posicoesInimigos, i);
+                                LimpaLugarAntigoInimigo(posicoesInimigos, i);
                             }
                             acaoInimigo();
                             Mapa.CheckMapaIsRenderizando();
                             MostrarMensagem.GameOver();
                             Environment.Exit(0);
                         }
+                    } else if( 
+                            tipoInimigo == "§§" &&
+                            cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(0) + posicoesInimigos[i, 0] > 0 && 
+                            cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(0) + posicoesInimigos[i, 0] < Game.GetMapa().GetLength(0)-1 && 
+                            cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(1) + posicoesInimigos[i, 1] > 0 && 
+                            cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(1) + posicoesInimigos[i, 1] < Game.GetMapa().GetLength(1)-1 && 
+                            !DB.todosTiposInimigo.Contains(destino)
+                        ){
+                        LimpaLugarAntigoInimigo(posicoesInimigos, i);
+                        acaoInimigo();
+                        break;
+
                     } else {
                         cloneAltPosicao.RemoveAt(idxAleatorio);
                     }
@@ -304,6 +380,35 @@ namespace jogoInicial
                 await Task.Delay((int)(1500 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo5]);
                 await IntervaloMovimentoInimigo5();  
+            }
+        }
+        //Inimigo Evolutivo
+        public static async Task IntervaloMovimentoInimigo6(){
+            if (Game.FaseAtual._qntInimigosTipo6 > 0) {           
+                await Task.Delay((int)(750 * Game.dificuldade));
+                MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo6]);
+                await IntervaloMovimentoInimigo6();  
+            }
+        }
+        public static async Task IntervaloMovimentoInimigo7(){
+            if (Game.FaseAtual._qntInimigosTipo7 > 0) {           
+                await Task.Delay((int)(750 * Game.dificuldade));
+                MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo7]);
+                await IntervaloMovimentoInimigo7();  
+            }
+        }
+        public static async Task IntervaloMovimentoInimigo8(){
+            if (Game.FaseAtual._qntInimigosTipo8 > 0) {           
+                await Task.Delay((int)(450 * Game.dificuldade));
+                MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo8]);
+                await IntervaloMovimentoInimigo8();  
+            }
+        }
+        public static async Task IntervaloMovimentoInimigo9(){
+            if (Game.FaseAtual._qntInimigosTipo9 > 0) {           
+                await Task.Delay((int)(450 * Game.dificuldade));
+                MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo9]);
+                await IntervaloMovimentoInimigo9();  
             }
         }
     }

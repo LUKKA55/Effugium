@@ -6,9 +6,8 @@
         Baixo,
         Direita
     }
-    public class Game
-    {
-        public static int nivelFase = 0;
+    public class Game {
+        public static int nivelFase = 20;
         public static FaseStatus FaseAtual = DB.fases[nivelFase];
         public static float dificuldade;
         public static ConsoleKeyInfo key;
@@ -21,7 +20,11 @@
                 FaseAtual._qntInimigosTipo2, 
                 FaseAtual._qntInimigosTipo3,
                 FaseAtual._qntInimigosTipo4,
-                FaseAtual._qntInimigosTipo5
+                FaseAtual._qntInimigosTipo5,
+                FaseAtual._qntInimigosTipo6,
+                FaseAtual._qntInimigosTipo7,
+                FaseAtual._qntInimigosTipo8,
+                FaseAtual._qntInimigosTipo9,
             }.TrueForAll(
                 (qntInimigo) => qntInimigo <= 0
             );
@@ -119,6 +122,18 @@
 
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo5 > 0)  
                     Inimigos.IntervaloMovimentoInimigo5();
+
+                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo6 > 0)  
+                    Inimigos.IntervaloMovimentoInimigo6();
+
+                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo7 > 0)  
+                    Inimigos.IntervaloMovimentoInimigo7();
+
+                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo8 > 0)  
+                    Inimigos.IntervaloMovimentoInimigo8();
+
+                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo9 > 0)  
+                    Inimigos.IntervaloMovimentoInimigo9();
 
                 Mapa.ResetaSpawnsItensDoMapa();
                 Mapa.CheckMapaIsRenderizando();

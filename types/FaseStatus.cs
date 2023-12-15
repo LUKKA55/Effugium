@@ -8,6 +8,11 @@ namespace jogoInicial
         public int _qntInimigosTipo3;
         public int _qntInimigosTipo4;
         public int _qntInimigosTipo5;
+        //Inimigo Evolutivo
+        public int _qntInimigosTipo6;
+        public int _qntInimigosTipo7;
+        public int _qntInimigosTipo8;
+        public int _qntInimigosTipo9;
         public bool _espada = true;
         public bool _escudo;
         public bool _picareta;
@@ -22,7 +27,11 @@ namespace jogoInicial
             int qntInimigosTipo2 = 0, 
             int qntInimigosTipo3 = 0,
             int qntInimigosTipo4 = 0,
-            int qntInimigosTipo5 = 0
+            int qntInimigosTipo5 = 0,
+            int qntInimigosTipo6 = 0,
+            int qntInimigosTipo7 = 0,
+            int qntInimigosTipo8 = 0,
+            int qntInimigosTipo9 = 0
         ) {
             this._mapa = mapa;
             this._qntInimigosTipo1 = qntInimigosTipo1;
@@ -30,6 +39,10 @@ namespace jogoInicial
             this._qntInimigosTipo3 = qntInimigosTipo3;
             this._qntInimigosTipo4 = qntInimigosTipo4;
             this._qntInimigosTipo5 = qntInimigosTipo5;
+            this._qntInimigosTipo6 = qntInimigosTipo6;
+            this._qntInimigosTipo7 = qntInimigosTipo7;
+            this._qntInimigosTipo8 = qntInimigosTipo8;
+            this._qntInimigosTipo9 = qntInimigosTipo9;
             this._escudo = escudo;
             this._picareta = picareta;
             this._arco = arco;

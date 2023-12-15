@@ -1,7 +1,6 @@
 namespace jogoInicial
 {
-    public class Mapa
-    {
+    public class Mapa {
         public static bool estaRenderizando = false;
         public static void RenderizarMapa(){
            if(DB.fases[Game.nivelFase]._modoJogo != "ESCURO"){

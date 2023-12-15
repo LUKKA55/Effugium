@@ -1,7 +1,6 @@
 namespace jogoInicial
 {
-    public class Personagem
-    {
+    public class Personagem {
         public static List<int> posicaoPersonagem = new (){2, 9};
         public static List<bool> jaEncontrouOItem = new(){
             false,
@@ -163,7 +162,20 @@ namespace jogoInicial
                 break;
                 case EnumInimigos.tipo5:
                     Game.FaseAtual._qntInimigosTipo5--;             
-                break;                                                                   
+                break;
+                //Inimigo Evolutivo
+                case EnumInimigos.tipo6:
+                    Game.FaseAtual._qntInimigosTipo6--;             
+                break;
+                case EnumInimigos.tipo7:
+                    Game.FaseAtual._qntInimigosTipo7--;             
+                break;
+                case EnumInimigos.tipo8:
+                    Game.FaseAtual._qntInimigosTipo8--;             
+                break;
+                case EnumInimigos.tipo9:
+                    Game.FaseAtual._qntInimigosTipo9--;             
+                break;                                                                        
             }
             Game.CheckProximaFase();
         }
