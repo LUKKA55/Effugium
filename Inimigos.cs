@@ -140,11 +140,11 @@ namespace jogoInicial
                         cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(1) + posicoesInimigos[i, 1]
                     ];
 
-                    void acaoInimigo(bool destroiItem = false) => 
+                    void acaoInimigo(bool destroiDefesaUsuario = false) => 
                         Game.GetMapa()[ 
                             cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(0) + posicoesInimigos[i, 0],
                             cloneAltPosicao.ElementAt(idxAleatorio).ElementAt(1) + posicoesInimigos[i, 1]
-                        ] = destroiItem 
+                        ] = destroiDefesaUsuario 
                             ? 
                             Personagem.GetPersonagemEquipado() 
                             : 
@@ -160,18 +160,21 @@ namespace jogoInicial
                             Game.FaseAtual._qntInimigosTipo5++;
                         }
 
-                        int tipoItem = DB.todosTiposItens.FindIndex(i => i._modelo == destino);
-                        if(tipoItem == 0)
-                            Personagem.inventario.espada._itemNoMapa = false;
-
-                        if(tipoItem == 1)
-                            Personagem.inventario.escudo._itemNoMapa = false;
-
-                        if(tipoItem == 2)
-                            Personagem.inventario.picareta._itemNoMapa = false;
-
-                        if(tipoItem == 3)
-                            Personagem.inventario.arco._itemNoMapa = false;
+                        EnumItens tipoItem = (EnumItens)DB.todosTiposItens.FindIndex(i => i._modelo == destino);
+                        switch(tipoItem) {
+                            case EnumItens.espada:
+                                Personagem.inventario.espada._itemNoMapa = false;
+                            break;
+                            case EnumItens.escudo:
+                                Personagem.inventario.escudo._itemNoMapa = false;
+                            break;
+                            case EnumItens.picareta:
+                                Personagem.inventario.picareta._itemNoMapa = false;
+                            break;   
+                            case EnumItens.arco:
+                                Personagem.inventario.arco._itemNoMapa = false;
+                            break;                                                         
+                        }
                         
                         acaoInimigo();
                         break;
@@ -338,6 +341,21 @@ namespace jogoInicial
                     }
 
                 }else if(DB.todosTiposItens.FindIndex((i) => i._modelo == destinoString) >= 0){
+                    EnumItens tipoItem = (EnumItens)DB.todosTiposItens.FindIndex(i => i._modelo == destinoString);
+                    switch(tipoItem) {
+                        case EnumItens.espada:
+                            Personagem.inventario.espada._itemNoMapa = false;
+                        break;
+                        case EnumItens.escudo:
+                            Personagem.inventario.escudo._itemNoMapa = false;
+                        break;
+                        case EnumItens.picareta:
+                            Personagem.inventario.picareta._itemNoMapa = false;
+                        break;   
+                        case EnumItens.arco:
+                            Personagem.inventario.arco._itemNoMapa = false;
+                        break;                                                         
+                    }
                     Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
                 }
 
@@ -348,35 +366,35 @@ namespace jogoInicial
             }        
         }
         public static async Task IntervaloMovimentoInimigo(){
-            if (Game.FaseAtual._qntInimigosTipo1 > 0) {              
+            if (Game.FaseAtual._qntInimigosTipo1 > 0 && !Game.pararRenderizacoes) {              
                 await Task.Delay((int)(1500 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo1]);
                 await IntervaloMovimentoInimigo();  
             }
         }
         public static async Task IntervaloMovimentoInimigo2(){
-            if (Game.FaseAtual._qntInimigosTipo2 > 0) {
+            if (Game.FaseAtual._qntInimigosTipo2 > 0 && !Game.pararRenderizacoes) {
                 await Task.Delay((int)(750 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo2]);
                 await IntervaloMovimentoInimigo2();  
             }
         }
         public static async Task IntervaloMovimentoInimigo3(){
-            if (Game.FaseAtual._qntInimigosTipo3 > 0) {
+            if (Game.FaseAtual._qntInimigosTipo3 > 0 && !Game.pararRenderizacoes) {
                 await Task.Delay((int)(1200 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo3]);
                 await IntervaloMovimentoInimigo3();  
             }
         }
         public static async Task IntervaloMovimentoInimigo4(){
-            if (Game.FaseAtual._qntInimigosTipo4 > 0) {              
+            if (Game.FaseAtual._qntInimigosTipo4 > 0 && !Game.pararRenderizacoes) {              
                 await Task.Delay((int)(1500 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo4]);
                 await IntervaloMovimentoInimigo4();  
             }
         }
         public static async Task IntervaloMovimentoInimigo5(){
-            if (Game.FaseAtual._qntInimigosTipo5 > 0) {           
+            if (Game.FaseAtual._qntInimigosTipo5 > 0 && !Game.pararRenderizacoes) {           
                 await Task.Delay((int)(1500 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo5]);
                 await IntervaloMovimentoInimigo5();  
@@ -384,28 +402,28 @@ namespace jogoInicial
         }
         //Inimigo Evolutivo
         public static async Task IntervaloMovimentoInimigo6(){
-            if (Game.FaseAtual._qntInimigosTipo6 > 0) {           
+            if (Game.FaseAtual._qntInimigosTipo6 > 0 && !Game.pararRenderizacoes) {           
                 await Task.Delay((int)(750 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo6]);
                 await IntervaloMovimentoInimigo6();  
             }
         }
         public static async Task IntervaloMovimentoInimigo7(){
-            if (Game.FaseAtual._qntInimigosTipo7 > 0) {           
+            if (Game.FaseAtual._qntInimigosTipo7 > 0 && !Game.pararRenderizacoes) {           
                 await Task.Delay((int)(750 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo7]);
                 await IntervaloMovimentoInimigo7();  
             }
         }
         public static async Task IntervaloMovimentoInimigo8(){
-            if (Game.FaseAtual._qntInimigosTipo8 > 0) {           
+            if (Game.FaseAtual._qntInimigosTipo8 > 0 && !Game.pararRenderizacoes) {           
                 await Task.Delay((int)(450 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo8]);
                 await IntervaloMovimentoInimigo8();  
             }
         }
         public static async Task IntervaloMovimentoInimigo9(){
-            if (Game.FaseAtual._qntInimigosTipo9 > 0) {           
+            if (Game.FaseAtual._qntInimigosTipo9 > 0 && !Game.pararRenderizacoes) {           
                 await Task.Delay((int)(450 * Game.dificuldade));
                 MovimentacaoInimigo(DB.todosTiposInimigo[(int)EnumInimigos.tipo9]);
                 await IntervaloMovimentoInimigo9();  

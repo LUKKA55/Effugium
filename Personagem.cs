@@ -144,6 +144,7 @@ namespace jogoInicial
         public static void ResetPosicaoPersonagem() {
             posicaoPersonagem[0] = 2;
             posicaoPersonagem[1] = 9;
+            Game.GetMapa()[2, 9] = Personagem.GetPersonagemEquipado();
         }
 
         public static void MatarInimigo(EnumInimigos tipoInimigo) {

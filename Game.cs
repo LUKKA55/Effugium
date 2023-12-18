@@ -7,7 +7,7 @@
         Direita
     }
     public class Game {
-        public static int nivelFase = 20;
+        public static int nivelFase = 7;
         public static FaseStatus FaseAtual = DB.fases[nivelFase];
         public static float dificuldade;
         public static ConsoleKeyInfo key;
@@ -55,11 +55,11 @@
 
                 await Task.Delay(75);
             } 
-            pararRenderizacoes = false;
             
             FaseAtual = DB.fases[nivelFase];
             Personagem.ResetPosicaoPersonagem();
             Mapa.ResetaSpawnsItensDoMapa();
+            pararRenderizacoes = false;
             Mapa.CheckMapaIsRenderizando();
         }
 

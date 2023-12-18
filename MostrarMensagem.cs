@@ -36,7 +36,7 @@ namespace jogoInicial
         }
         public static void Start(){
             Console.WriteLine("");
-            Console.WriteLine("------------- SELECIONE A DIFUCULDADE -------------");
+            Console.WriteLine("------------- SELECIONE A DIFICULDADE -------------");
             Console.WriteLine("----------- FÁCIL -- MÉDIO -- DIFÍCIL -------------");
             Console.WriteLine("------------ (1) ---- (2) ---- (3) ----------------");
             Console.WriteLine("");

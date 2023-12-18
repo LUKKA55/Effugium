@@ -29,16 +29,16 @@ namespace jogoInicial
             Console.WriteLine("|               Inventário             |");
             
             if (espada._quantidade > 0 )
-                Console.WriteLine("|               {0}x Espada              |", espada._quantidade);
+                Console.WriteLine("|         [1]   {0}x Espada              |", espada._quantidade);
             
             if (escudo._quantidade > 0 )
-                Console.WriteLine("|               {0}x Escudo              |", escudo._quantidade);
+                Console.WriteLine("|         [2]   {0}x Escudo              |", escudo._quantidade);
             
             if (picareta._quantidade > 0 )
-                Console.WriteLine("|               {0}x Picareta            |", picareta._quantidade);
+                Console.WriteLine("|         [3]   {0}x Picareta            |", picareta._quantidade);
             
             if (arco._quantidade > 0 )
-                Console.WriteLine("|               {0}x Arco                |", arco._quantidade);
+                Console.WriteLine("|         [4]   {0}x Arco                |", arco._quantidade);
 
             Console.WriteLine("----------------------------------------");
         }
