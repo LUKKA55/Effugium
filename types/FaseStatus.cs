@@ -48,6 +48,25 @@ namespace jogoInicial
             this._arco = arco;
             this._modoJogo = modoJogo;
         }
+
+        public FaseStatus CopiaFase(){
+            return new FaseStatus(
+                (string[,])_mapa.Clone(),
+                this._escudo, 
+                this._picareta,
+                this._arco,
+                this._modoJogo,
+                this._qntInimigosTipo1,
+                this._qntInimigosTipo2,
+                this._qntInimigosTipo3,
+                this._qntInimigosTipo4,
+                this._qntInimigosTipo5,
+                this._qntInimigosTipo6,
+                this._qntInimigosTipo7,
+                this._qntInimigosTipo8,
+                this._qntInimigosTipo9
+            );
+        }
     }
     
 }

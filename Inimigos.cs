@@ -190,8 +190,7 @@ namespace jogoInicial
                             }
                             acaoInimigo();
                             Mapa.CheckMapaIsRenderizando();
-                            MostrarMensagem.GameOver();
-                            Environment.Exit(0);
+                            Game.GameOver();
                         }
                     } else if( 
                             tipoInimigo == "§§" &&
@@ -336,8 +335,7 @@ namespace jogoInicial
                         Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = Personagem.GetPersonagemEquipado();
 
                     } else {
-                        MostrarMensagem.GameOver();
-                        Environment.Exit(0);
+                        Game.GameOver();
                     }
 
                 }else if(DB.todosTiposItens.FindIndex((i) => i._modelo == destinoString) >= 0){

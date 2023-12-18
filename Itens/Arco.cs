@@ -86,8 +86,7 @@ namespace jogoInicial
                         Personagem.inventario.escudo._equipado = false;
                         Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = Personagem.GetPersonagemEquipado();
                     } else {
-                        MostrarMensagem.GameOver();
-                        Environment.Exit(0);
+                        Game.GameOver();                      
                     };
                 };
                 

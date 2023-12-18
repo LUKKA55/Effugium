@@ -7,12 +7,13 @@
         Direita
     }
     public class Game {
-        public static int nivelFase = 7;
-        public static FaseStatus FaseAtual = DB.fases[nivelFase];
+        public static int nivelFase = 0;
+        public static FaseStatus FaseAtual = DB.fases[nivelFase].CopiaFase();
         public static float dificuldade;
         public static ConsoleKeyInfo key;
         public static bool telaInfoAberta = false;
         public static bool pararRenderizacoes = false;
+        public static bool teste = false;
 
         public static void CheckProximaFase() {
             bool todosInimigoMortos = new List<int>{ 
@@ -56,7 +57,7 @@
                 await Task.Delay(75);
             } 
             
-            FaseAtual = DB.fases[nivelFase];
+            FaseAtual = DB.fases[nivelFase].CopiaFase();
             Personagem.ResetPosicaoPersonagem();
             Mapa.ResetaSpawnsItensDoMapa();
             pararRenderizacoes = false;
@@ -73,6 +74,44 @@
             return FaseAtual._mapa;
         }
 
+        public
+
+        enum enumOpcoesGameOver {
+            TentarNovamente = 1,
+            NovoJogo,
+            Sair
+        }
+        public static void GameOver() {
+            pararRenderizacoes = true;
+            bool respostaJaFoiEscolhida = false;
+            ConsoleKeyInfo inputUsuario;
+            int respostaEscolhida;
+
+            do{
+                MostrarMensagem.GameOver();
+                inputUsuario = Console.ReadKey();
+                respostaEscolhida = inputUsuario.KeyChar - '0';
+
+                if(new List<int>(){1, 2, 3}.Contains(respostaEscolhida)){
+                    enumOpcoesGameOver opcao = (enumOpcoesGameOver)respostaEscolhida;
+                    switch (opcao){
+                        case enumOpcoesGameOver.TentarNovamente:
+                            nivelFase -= 1;
+                            break;
+                        case enumOpcoesGameOver.NovoJogo:
+                            nivelFase = -1;
+                            break;
+                        case enumOpcoesGameOver.Sair:
+                            Environment.Exit(0);
+                            break;
+                    }
+                    ProximaFase();
+                    teste = false;
+                    respostaJaFoiEscolhida = true;
+                }
+            }while (!respostaJaFoiEscolhida);
+        }
+
         public static void Main() {
             Console.Clear();
             Console.WriteLine("Jogo inicializado");
@@ -85,9 +124,7 @@
 
             if (
                 !char.IsDigit(respostaUsuario.KeyChar) ||
-                new List<int>{1, 2, 3}
-                    .FindIndex(d => d == dificuldadeExcolhida) 
-                == -1
+                !new List<int>{1, 2, 3}.Contains(dificuldadeExcolhida)
             ) {
                 MostrarMensagem.ErrorDifficulty();
                 goto start;
@@ -105,8 +142,9 @@
                 break;
             }
             
-            foreach(FaseStatus fase in DB.fases) {
+            for(; nivelFase < DB.fases.Count;) {
                 int faseAtual = nivelFase;
+                teste = true;
 
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo1 > 0) 
                     Inimigos.IntervaloMovimentoInimigo();
@@ -140,6 +178,7 @@
                 
                 do{
                     key = Console.ReadKey();
+
                     if (pararRenderizacoes) {
                         continue;
                     }
@@ -162,7 +201,7 @@
                         MostrarMensagem.Exit();
                         Environment.Exit(0);
                     }
-                }while (faseAtual == nivelFase || pararRenderizacoes);
+                }while ((faseAtual == nivelFase || pararRenderizacoes) && teste);
             }
         }
     }

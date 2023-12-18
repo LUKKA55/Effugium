@@ -6,7 +6,12 @@ namespace jogoInicial
             Console.WriteLine("");
             Console.WriteLine("{0}----------------------------------------------", Game.nivelFase > 9 ? "--" : "-");
             Console.WriteLine("{0}--------------- FIM DE JOGO ------------------", Game.nivelFase > 9 ? "--" : "-");
-            Console.WriteLine("------------------ FASE {0} ---------------------", Game.nivelFase);
+            Console.WriteLine("------------------- FASE: {0} -------------------", Game.nivelFase);
+            Console.WriteLine("{0}---- CLIQUE DUAS VEZES NA OPÇÃO ESCOLHIDA ----", Game.nivelFase > 9 ? "--" : "-");
+            Console.WriteLine("{0}------------- TENTAR NOVAMENTE [1] -----------", Game.nivelFase > 9 ? "--" : "-");
+            Console.WriteLine("{0}-------------        NOVO JOGO [2] -----------", Game.nivelFase > 9 ? "--" : "-");
+            Console.WriteLine("{0}-------------             SAIR [3] -----------", Game.nivelFase > 9 ? "--" : "-");
+            Console.WriteLine("{0}----------------------------------------------", Game.nivelFase > 9 ? "--" : "-");
             Console.WriteLine("");
         }
         public static void NextLevel(){
