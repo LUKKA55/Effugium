@@ -23,6 +23,8 @@ namespace jogoInicial
             Console.Clear(); 
             for (int i = 0; i < Game.GetMapa().GetLength(0); i++){
                 for (int j = 0; j < Game.GetMapa().GetLength(1); j++){
+                    if(Game.pararRenderizacoes || Game.telaInfoAberta)return;
+                    
                     Console.Write(Game.GetMapa()[i,j]);
                 }
                 Console.WriteLine();
@@ -63,6 +65,8 @@ namespace jogoInicial
             Console.Clear(); 
             for (int i = 0; i < Game.GetMapa().GetLength(0); i++){
                 for (int j = 0; j < Game.GetMapa().GetLength(1); j++){
+                    if(Game.pararRenderizacoes || Game.telaInfoAberta)return;
+
                     bool posicaoEhRevelada = posicoesMapaRevelado.Exists((pmr) => 
                         pmr.ElementAt(0) == i && pmr.ElementAt(1) == j);
 

@@ -544,7 +544,7 @@ namespace jogoInicial
                 3,
                 1,
                 1
-            ),
+            )
         };
         public static List<Item> todosTiposItens = new(){
             new("<-", new(){new(){5, 16}, new(){1, 1}, new(){5, 9}}),
