@@ -166,9 +166,7 @@ namespace jogoInicial
             ModeloBaseItem[] itensAtuais = new ModeloBaseItem[]{ espada, escudo, picareta, arco};
             
             for(int i = 0; i < itensAtuais.GetLength(0); i++) {
-                itensBackup[i]._itemNoMapa = itensAtuais[i]._itemNoMapa;
                 itensBackup[i]._quantidade = itensAtuais[i]._quantidade;
-                itensBackup[i]._spawnando = itensAtuais[i]._spawnando;
             };
 
             backup.espada.nmrPuloAtaqueValido = 0;
@@ -189,9 +187,7 @@ namespace jogoInicial
             ModeloBaseItem[] itensAtuais = new ModeloBaseItem[]{ espada, escudo, picareta, arco};
             
             for(int i = 0; i < itensAtuais.GetLength(0); i++) {
-                itensAtuais[i]._itemNoMapa = itensBackup[i]._itemNoMapa;
                 itensAtuais[i]._quantidade = itensBackup[i]._quantidade;
-                itensAtuais[i]._spawnando = itensBackup[i]._spawnando;
             };
 
             espada.nmrPuloAtaqueValido = 0;
