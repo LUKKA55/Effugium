@@ -57,6 +57,7 @@
                 await Task.Delay(75);
             } 
             
+            Personagem.inventario.SaveBackupInventario();
             FaseAtual = DB.fases[nivelFase].CopiaFase();
             Personagem.ResetPosicaoPersonagem();
             Mapa.ResetaSpawnsItensDoMapa();
@@ -96,10 +97,12 @@
                     enumOpcoesGameOver opcao = (enumOpcoesGameOver)respostaEscolhida;
                     switch (opcao){
                         case enumOpcoesGameOver.TentarNovamente:
+                            Personagem.inventario.LoadBackupInventario();
                             nivelFase -= 1;
                             break;
                         case enumOpcoesGameOver.NovoJogo:
                             nivelFase = -1;
+                            Personagem.inventario.ResetarInventario();
                             break;
                         case enumOpcoesGameOver.Sair:
                             Environment.Exit(0);

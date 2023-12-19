@@ -544,6 +544,7 @@ namespace jogoInicial
         public static List<string> todosTiposInimigo = new(){"XX", ")(", ";;", "(>", "@@","çç", "¢¢", "$$", "§§"};
         public static List<string> inimigosEvolutivos = new(){"çç", "¢¢", "$$", "§§"};
         public static List<string> modelosFlechas = new(){ " i", " !", "--" }; 
+        public static Inventario backupInventario;
     }
 }
 

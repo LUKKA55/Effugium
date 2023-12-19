@@ -19,7 +19,7 @@ namespace jogoInicial
                 Console.WriteLine("Está protegido de UM ataque");
             
             if(picareta._equipado)
-                Console.WriteLine("Está pode quebrar UMA parede do mapa (menos as bordas)");
+                Console.WriteLine("Pode quebrar UMA parede do mapa (menos as bordas)");
             
             if(arco._equipado)
                 Console.WriteLine("Aperte a tecla da direção que deseja atirar a flecha");
@@ -145,6 +145,59 @@ namespace jogoInicial
                     arco._itemNoMapa = false;
                     break;
             }
+        }
+        public void ResetarInventario() {
+            ModeloBaseItem[] itens = new ModeloBaseItem[]{ espada, escudo, picareta, arco};
+            foreach(ModeloBaseItem item in itens) {
+                item._itemNoMapa = false;
+                item._quantidade = 0;
+                item._spawnando = false;
+            }
+
+            espada.nmrPuloAtaqueValido = 0;
+            escudo._equipado = false;
+            picareta._equipado = false;
+            arco._equipado = false;
+        }
+
+        public void SaveBackupInventario() {
+            Inventario backup = new();
+            ModeloBaseItem[] itensBackup = new ModeloBaseItem[]{ backup.espada, backup.escudo, backup.picareta, backup.arco};
+            ModeloBaseItem[] itensAtuais = new ModeloBaseItem[]{ espada, escudo, picareta, arco};
+            
+            for(int i = 0; i < itensAtuais.GetLength(0); i++) {
+                itensBackup[i]._itemNoMapa = itensAtuais[i]._itemNoMapa;
+                itensBackup[i]._quantidade = itensAtuais[i]._quantidade;
+                itensBackup[i]._spawnando = itensAtuais[i]._spawnando;
+            };
+
+            backup.espada.nmrPuloAtaqueValido = 0;
+            backup.escudo._equipado = escudo._equipado;
+            backup.picareta._equipado = picareta._equipado;
+            backup.arco._equipado = arco._equipado;
+            
+            DB.backupInventario = backup;
+        }
+
+        public void LoadBackupInventario() {
+            ModeloBaseItem[] itensBackup = new ModeloBaseItem[]{ 
+                DB.backupInventario.espada, 
+                DB.backupInventario.escudo, 
+                DB.backupInventario.picareta, 
+                DB.backupInventario.arco
+            };
+            ModeloBaseItem[] itensAtuais = new ModeloBaseItem[]{ espada, escudo, picareta, arco};
+            
+            for(int i = 0; i < itensAtuais.GetLength(0); i++) {
+                itensAtuais[i]._itemNoMapa = itensBackup[i]._itemNoMapa;
+                itensAtuais[i]._quantidade = itensBackup[i]._quantidade;
+                itensAtuais[i]._spawnando = itensBackup[i]._spawnando;
+            };
+
+            espada.nmrPuloAtaqueValido = 0;
+            escudo._equipado = DB.backupInventario.escudo._equipado;
+            picareta._equipado = DB.backupInventario.picareta._equipado;
+            arco._equipado = DB.backupInventario.arco._equipado;
         }
     }
 }
