@@ -18,7 +18,7 @@ namespace jogoInicial
             Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("{0}-------------------- PRÓXIMO ----------------------", Game.nivelFase > 9 ? "--" : "-");
-            Console.WriteLine("--------------------- LEVEL {0} ----------------------", Game.nivelFase);
+            Console.WriteLine("--------------------- LEVEL {0} ----------------------", Game.nivelFase + 1);
             LevelTip();
             Console.WriteLine("{0}-------------------    -->    ---------------------", Game.nivelFase > 9 ? "--" : "-");
             Console.WriteLine("");
@@ -57,14 +57,18 @@ namespace jogoInicial
 
         public static void LevelTip() {
             switch(Game.nivelFase) {
+                case 4: //1º Fase com Inimigo a Distancia
+                    Console.WriteLine("------- DICA: Alguns inimigos podem disparar --------");
+                    Console.WriteLine("------- projéteis!                           --------");
+                break;
+                case 6: //1º Fase com Inimigo Evolutivo
+                    Console.WriteLine("------- DICA: Alguns inimigos podem evoluir! --------");
+                break;
                 case 8: //1º Fase de Fuga contra varios XX
                 case 10: //1º Fase de Fuga Inimigo "@"
                     Console.WriteLine("------ DICA: Fugir as vezes é a melhor opção, -------");
                     Console.WriteLine("------ quebrar paredes laterais rachadas      -------");
                     Console.WriteLine("------ resulta em vitória!                    -------");
-                break;
-                case 16: //1º Fase com Inimigo Evolutivo
-                    Console.WriteLine("------- DICA: Alguns inimigos podem evoluir! --------");
                 break;
                 case 19: //Fase não da respawn de picareta
                     Console.WriteLine("------- DICA: Nem sempre os itens reaparecem! -------");

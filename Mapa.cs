@@ -93,7 +93,7 @@ namespace jogoInicial
         public static void VerificaSpawnItens() {
             Personagem.inventario.arco.VerificaSpawn(
                 !Personagem.inventario.arco._equipado && 
-                DB.fases.ElementAt(Game.nivelFase)._arco
+                Game.FaseAtual._arco
             );
 
             Personagem.inventario.espada.VerificaSpawn(
@@ -102,12 +102,12 @@ namespace jogoInicial
 
             Personagem.inventario.escudo.VerificaSpawn(
                 !Personagem.inventario.escudo._equipado &&
-                DB.fases.ElementAt(Game.nivelFase)._escudo
+                Game.FaseAtual._escudo
             );
 
             Personagem.inventario.picareta.VerificaSpawn(
                 !Personagem.inventario.picareta._equipado &&
-                DB.fases.ElementAt(Game.nivelFase)._picareta
+                Game.FaseAtual._picareta
             );
         }
     }

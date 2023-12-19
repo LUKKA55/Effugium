@@ -7,7 +7,7 @@
         Direita
     }
     public class Game {
-        public static int nivelFase = 0;
+        public static int nivelFase = 14;
         public static FaseStatus FaseAtual = DB.fases[nivelFase].CopiaFase();
         public static float dificuldade;
         public static ConsoleKeyInfo key;
@@ -44,7 +44,6 @@
         }
 
         public static async Task ProximaFase() {
-            nivelFase += 1;
             pararRenderizacoes = true;
 
             char[] load = new char[50];
@@ -57,6 +56,7 @@
                 await Task.Delay(75);
             } 
             
+            nivelFase += 1;
             Personagem.inventario.SaveBackupInventario();
             FaseAtual = DB.fases[nivelFase].CopiaFase();
             Personagem.ResetPosicaoPersonagem();
@@ -101,10 +101,11 @@
                             nivelFase -= 1;
                             break;
                         case enumOpcoesGameOver.NovoJogo:
-                            nivelFase = -1;
                             Personagem.inventario.ResetarInventario();
+                            nivelFase = -1;
                             break;
                         case enumOpcoesGameOver.Sair:
+                            MostrarMensagem.Exit();
                             Environment.Exit(0);
                             break;
                     }

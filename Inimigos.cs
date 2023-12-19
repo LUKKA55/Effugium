@@ -189,7 +189,6 @@ namespace jogoInicial
                                 LimpaLugarAntigoInimigo(posicoesInimigos, i);
                             }
                             acaoInimigo();
-                            Mapa.CheckMapaIsRenderizando();
                             Game.GameOver();
                         }
                     } else if( 
@@ -324,7 +323,7 @@ namespace jogoInicial
                 Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = "::";
 
                 Mapa.CheckMapaIsRenderizando();
-                await Task.Delay(300);
+                await Task.Delay((int)(600 * Game.dificuldade));
                 if (Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] != "  ") {
                     await AtirarProjetil(direcao, destinoPosicoes);   
                 }               

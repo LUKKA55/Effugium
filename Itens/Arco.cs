@@ -67,7 +67,7 @@ namespace jogoInicial
                     break;                                      
                 }
                 Mapa.CheckMapaIsRenderizando();
-                await Task.Delay(650);
+                await Task.Delay(650 - (int)(120 * Game.dificuldade));
                 if (Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] != "  ") {
                     await AtirarFlecha(direcao, destinoPosicoes);   
                 }               
@@ -79,6 +79,21 @@ namespace jogoInicial
                     Personagem.MatarInimigo((EnumInimigos)tipoInimigo);
 
                 }else if(DB.todosTiposItens.FindIndex((i) => i._modelo == destinoString) >= 0){
+                    EnumItens tipoItem = (EnumItens)DB.todosTiposItens.FindIndex(i => i._modelo == destinoString);
+                    switch(tipoItem) {
+                        case EnumItens.espada:
+                            Personagem.inventario.espada._itemNoMapa = false;
+                        break;
+                        case EnumItens.escudo:
+                            Personagem.inventario.escudo._itemNoMapa = false;
+                        break;
+                        case EnumItens.picareta:
+                            Personagem.inventario.picareta._itemNoMapa = false;
+                        break;   
+                        case EnumItens.arco:
+                            Personagem.inventario.arco._itemNoMapa = false;
+                        break;                                                         
+                    }
                     Game.GetMapa()[destinoPosicoes[0],destinoPosicoes[1]] = "  ";
 
                 }else if(DB.modelosPersonagem.Contains(destinoString)){
