@@ -133,6 +133,7 @@ namespace jogoInicial
                 Game.GetMapa()[variacaoPosicao[0],variacaoPosicao[1]] = GetPersonagemEquipado();
                 
                 MatarInimigo((EnumInimigos)tipoInimigo);
+                inventario.espada._spawnInstantaneo = true;
 
                 posicaoPersonagem[0] = variacaoPosicao[0];
                 posicaoPersonagem[1] = variacaoPosicao[1];
