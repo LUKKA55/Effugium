@@ -7,7 +7,7 @@
         Direita
     }
     public class Game {
-        public static int nivelFase = 14;
+        public static int nivelFase = 0;
         public static FaseStatus FaseAtual = DB.fases[nivelFase].CopiaFase();
         public static float dificuldade;
         public static ConsoleKeyInfo key;
