@@ -5,6 +5,8 @@ namespace jogoInicial
         public List<List<int>> _spawnsDisponiveis;
         public bool _itemNoMapa = false;
         public bool _spawnando = false;
+
+        public bool _spawnInstantaneo = false;
         public int _quantidade = 0;
 
         public ModeloBaseItem (
@@ -23,7 +25,12 @@ namespace jogoInicial
                 validacoesExtra
             ) {
                 _spawnando = true;
-                await Task.Delay(10000);
+
+                if(!_spawnInstantaneo) {
+                    await Task.Delay(10000);
+                } else {
+                    _spawnInstantaneo = false;
+                }
                 List<List<int>> spawnsDisponiveis = _spawnsDisponiveis;
 
                 int tentativasDeSpawn = spawnsDisponiveis.Count;
