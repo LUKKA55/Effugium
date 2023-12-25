@@ -6,3 +6,5 @@
 
 - [Pendente] trocar nome de variavel TESTE
 - [Pendente] dar nome para o jogo e mudar nome de pastas etc
+- [Pendente] morte pendente as vezes tambem buga e fica piscando entre as renderizacoes
+- [Pendente] criar tutorial aqui no readme para rodar o jogo
