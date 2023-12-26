@@ -67,7 +67,10 @@ namespace Effugium
                     break;                                      
                 }
                 Mapa.CheckMapaIsRenderizando();
-                await Task.Delay(650 - (int)(120 * Game.dificuldade));
+                do {
+                    await Task.Delay(650 - (int)(120 * Game.dificuldade));
+                }  while(Game.telaInfoAberta);
+                
                 if (Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] != "  ") {
                     await AtirarFlecha(direcao, destinoPosicoes);   
                 }               

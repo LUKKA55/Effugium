@@ -323,7 +323,10 @@ namespace Effugium
                 Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] = "::";
 
                 Mapa.CheckMapaIsRenderizando();
-                await Task.Delay((int)(600 * Game.dificuldade));
+                do {
+                    await Task.Delay((int)(600 * Game.dificuldade));
+                }  while(Game.telaInfoAberta);
+                
                 if (Game.GetMapa()[destinoPosicoes[0], destinoPosicoes[1]] != "  ") {
                     await AtirarProjetil(direcao, destinoPosicoes);   
                 }               
