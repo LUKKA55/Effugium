@@ -101,7 +101,7 @@ namespace Effugium
             );
 
             Personagem.inventario.espada.VerificaSpawn(
-                Personagem.inventario.espada.nmrPuloAtaqueValido == 0
+                Personagem.inventario.espada.nmrPuloAtaqueValido <= 0
             );
 
             Personagem.inventario.escudo.VerificaSpawn(

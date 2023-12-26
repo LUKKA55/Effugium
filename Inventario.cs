@@ -89,7 +89,7 @@ namespace Effugium
                 break;
                 case 3:
                     if(picareta._quantidade > 0){
-                        if(espada.nmrPuloAtaqueValido == 0 && !arco._equipado){
+                        if(espada.nmrPuloAtaqueValido <= 0 && !arco._equipado){
                             picareta._quantidade--;
                             picareta._equipado = true;
                             
@@ -106,7 +106,7 @@ namespace Effugium
                 break;
                 case 4:
                     if(arco._quantidade > 0){
-                        if(espada.nmrPuloAtaqueValido == 0 && !picareta._equipado){
+                        if(espada.nmrPuloAtaqueValido <= 0 && !picareta._equipado){
                             arco._quantidade--;
                             arco._equipado = true;
                             
