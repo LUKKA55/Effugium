@@ -13,10 +13,10 @@
 
 **Passo 1**
 - Clone esse repositório em sua maquina.
-- 
+  
 **Passo 2**
 - Rode no terminal o comando "dotnet run".
-- 
+  
 **Passo 3**
 - Jogue!!!.
 - Seu objetivo é passar de fases e chegar até a última.
