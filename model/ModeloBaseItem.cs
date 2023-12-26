@@ -28,6 +28,14 @@ namespace Effugium
 
                 if(!_spawnInstantaneo) {
                     await Task.Delay(10000);
+                    if (
+                        _itemNoMapa || 
+                        _quantidade != 0 ||
+                        !validacoesExtra
+                    ) {
+                        _spawnando = false;
+                        return;
+                    }
                 } else {
                     _spawnInstantaneo = false;
                 }
