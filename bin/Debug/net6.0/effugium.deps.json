@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "jogoInicial/1.0.0": {
+      "effugium/1.0.0": {
         "runtime": {
-          "jogoInicial.dll": {}
+          "effugium.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "jogoInicial/1.0.0": {
+    "effugium/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

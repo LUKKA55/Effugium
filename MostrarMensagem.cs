@@ -56,7 +56,7 @@ namespace Effugium
         }
 
         public static void LevelTip() {
-            switch(Game.nivelFase) {
+            switch(Game.nivelFase + 1) {
                 case 4: //1º Fase com Inimigo a Distancia
                     Console.WriteLine("------- DICA: Alguns inimigos podem disparar --------");
                     Console.WriteLine("------- projéteis!                           --------");
