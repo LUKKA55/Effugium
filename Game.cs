@@ -12,6 +12,7 @@
         public static float dificuldade;
         public static ConsoleKeyInfo key;
         public static bool telaInfoAberta = false;
+        public static bool telaGameOver = false;
         public static bool pararRenderizacoes = false;
         public static bool faseNaoMudou = false;
 
@@ -83,6 +84,10 @@
             Sair
         }
         public static void GameOver() {
+            if(telaGameOver == true)
+                return;
+            
+            telaGameOver = true;
             pararRenderizacoes = true;
             bool respostaJaFoiEscolhida = false;
             ConsoleKeyInfo inputUsuario;
@@ -114,6 +119,7 @@
                     respostaJaFoiEscolhida = true;
                 }
             }while (!respostaJaFoiEscolhida);
+            telaGameOver = false;
         }
 
         public static void Main() {
