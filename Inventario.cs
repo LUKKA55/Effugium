@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public enum EnumItens {
         espada = 0,

@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public class FaseStatus {
         public string[,] _mapa;

@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public class Mapa {
         public static bool estaRenderizando = false;

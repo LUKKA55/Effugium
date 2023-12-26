@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public class Picareta : ModeloBaseItem {
         public bool _equipado = false;

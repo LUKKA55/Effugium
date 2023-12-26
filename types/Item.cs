@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     class Item {
         public string _modelo;

@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public class Escudo : ModeloBaseItem {
         public bool _equipado = false;

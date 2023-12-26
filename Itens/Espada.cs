@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public class Espada : ModeloBaseItem {
         public int nmrPuloAtaqueValido = 0;

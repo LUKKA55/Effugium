@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     class DB {
         public static List<FaseStatus> fases = new () { 

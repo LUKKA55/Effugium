@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public enum EnumInimigos {
         tipo1,

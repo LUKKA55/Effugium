@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public abstract class ModeloBaseItem {
         public EnumItens _tipoItem;

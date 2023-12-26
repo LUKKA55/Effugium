@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public class Personagem {
         public static List<int> posicaoPersonagem = new (){2, 9};

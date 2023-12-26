@@ -1,4 +1,4 @@
-namespace jogoInicial
+namespace Effugium
 {
     public class MostrarMensagem {
         public static void GameOver(){

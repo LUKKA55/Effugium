@@ -1,4 +1,4 @@
-﻿namespace jogoInicial
+﻿namespace Effugium
 {
     public enum enumDirecao {
         Cima = 1,
@@ -13,7 +13,7 @@
         public static ConsoleKeyInfo key;
         public static bool telaInfoAberta = false;
         public static bool pararRenderizacoes = false;
-        public static bool teste = false;
+        public static bool faseNaoMudou = false;
 
         public static void CheckProximaFase() {
             bool todosInimigoMortos = new List<int>{ 
@@ -110,7 +110,7 @@
                             break;
                     }
                     ProximaFase();
-                    teste = false;
+                    faseNaoMudou = false;
                     respostaJaFoiEscolhida = true;
                 }
             }while (!respostaJaFoiEscolhida);
@@ -148,7 +148,7 @@
             
             for(; nivelFase < DB.fases.Count;) {
                 int faseAtual = nivelFase;
-                teste = true;
+                faseNaoMudou = true;
 
                 if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo1 > 0) 
                     Inimigos.IntervaloMovimentoInimigo();
@@ -205,7 +205,7 @@
                         MostrarMensagem.Exit();
                         Environment.Exit(0);
                     }
-                }while ((faseAtual == nivelFase || pararRenderizacoes) && teste);
+                }while ((faseAtual == nivelFase || pararRenderizacoes) && faseNaoMudou);
             }
         }
     }
