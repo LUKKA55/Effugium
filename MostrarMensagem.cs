@@ -58,25 +58,25 @@ namespace Effugium
         public static void LevelTip() {
             switch(Game.nivelFase + 1) {
                 case 4: //1º Fase com Inimigo a Distancia
-                    Console.WriteLine("------- DICA: Alguns inimigos podem disparar --------");
-                    Console.WriteLine("------- projéteis!                           --------");
+                    Console.WriteLine("{0}------ DICA: Alguns inimigos podem disparar -------", Game.nivelFase > 9 ? "--" : "-");
+                    Console.WriteLine("{0}------ projéteis!                           -------", Game.nivelFase > 9 ? "--" : "-");
                 break;
                 case 6: //1º Fase com Inimigo Evolutivo
-                    Console.WriteLine("------- DICA: Alguns inimigos podem evoluir! --------");
+                    Console.WriteLine("{0}------ DICA: Alguns inimigos podem evoluir! -------", Game.nivelFase > 9 ? "--" : "-");
                 break;
                 case 8: //1º Fase de Fuga contra varios XX
                 case 10: //1º Fase de Fuga Inimigo "@"
-                    Console.WriteLine("------ DICA: Fugir as vezes é a melhor opção, -------");
-                    Console.WriteLine("------ quebrar paredes laterais rachadas      -------");
-                    Console.WriteLine("------ resulta em vitória!                    -------");
+                    Console.WriteLine("{0}----- DICA: Fugir as vezes é a melhor opção, ------", Game.nivelFase > 9 ? "--" : "-");
+                    Console.WriteLine("{0}----- quebrar paredes laterais rachadas      ------", Game.nivelFase > 9 ? "--" : "-");
+                    Console.WriteLine("{0}----- resulta em vitória!                    ------", Game.nivelFase > 9 ? "--" : "-");
                 break;
                 case 19: //Fase não da respawn de picareta
-                    Console.WriteLine("------- DICA: Nem sempre os itens reaparecem! -------");
+                    Console.WriteLine("{0}------ DICA: Nem sempre os itens reaparecem! ------", Game.nivelFase > 9 ? "--" : "-");
                 break;
                 case 20: //Ultima Fase
-                    Console.WriteLine("------- DICA: Tirar vantagem do seu inimigo   -------");
-                    Console.WriteLine("------- as vezes pode ser melhor que só       -------");
-                    Console.WriteLine("------- elimina-lo!                           -------");
+                    Console.WriteLine("{0}------ DICA: Tirar vantagem do seu inimigo   ------", Game.nivelFase > 9 ? "--" : "-");
+                    Console.WriteLine("{0}------ as vezes pode ser melhor que só       ------", Game.nivelFase > 9 ? "--" : "-");
+                    Console.WriteLine("{0}------ elimina-lo!                           ------", Game.nivelFase > 9 ? "--" : "-");
                 break;
             }
         }
