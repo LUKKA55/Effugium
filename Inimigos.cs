@@ -55,11 +55,13 @@ namespace Effugium
             for(int i = 0; i < qntInimigos; i++){
                 enumDirecao direcaoProjetil = enumDirecao.Direita;
 
-                bool inimigoTemVisaoJogador = VerificaInimigoTemVisaoJogador(new int[2]{ posicoesInimigos[i, 0], posicoesInimigos[i, 1] }, ref direcaoProjetil);
-                // se for true && turnoInimigo4Atira for true tbm, não se movimenta, somente atira na direcao
-                if (inimigoTemVisaoJogador && turnoInimigo4Atira && tipoInimigo == "(>") {
-                    AtirarProjetil(direcaoProjetil, new List<int>{ posicoesInimigos[i, 0], posicoesInimigos[i, 1] });
-                    continue;
+                if(tipoInimigo == "(>"){
+                    bool inimigoTemVisaoJogador = VerificaInimigoTemVisaoJogador(new int[2]{ posicoesInimigos[i, 0], posicoesInimigos[i, 1] }, ref direcaoProjetil);
+                    // se for true && turnoInimigo4Atira for true tbm, não se movimenta, somente atira na direcao
+                    if (inimigoTemVisaoJogador && turnoInimigo4Atira) {
+                        AtirarProjetil(direcaoProjetil, new List<int>{ posicoesInimigos[i, 0], posicoesInimigos[i, 1] });
+                        continue;
+                    }
                 }
 
                 var numeroAleatorio = new Random();
@@ -160,20 +162,23 @@ namespace Effugium
                             Game.FaseAtual._qntInimigosTipo5++;
                         }
 
-                        EnumItens tipoItem = (EnumItens)DB.todosTiposItens.FindIndex(i => i._modelo == destino);
-                        switch(tipoItem) {
-                            case EnumItens.espada:
-                                Personagem.inventario.espada._itemNoMapa = false;
-                            break;
-                            case EnumItens.escudo:
-                                Personagem.inventario.escudo._itemNoMapa = false;
-                            break;
-                            case EnumItens.picareta:
-                                Personagem.inventario.picareta._itemNoMapa = false;
-                            break;   
-                            case EnumItens.arco:
-                                Personagem.inventario.arco._itemNoMapa = false;
-                            break;                                                         
+                        int tipoItem = DB.todosTiposItens.FindIndex(i => i._modelo == destino);
+                        if(tipoItem > -1){
+                            EnumItens item = (EnumItens)tipoItem;
+                            switch(item) {
+                                case EnumItens.espada:
+                                    Personagem.inventario.espada._itemNoMapa = false;
+                                break;
+                                case EnumItens.escudo:
+                                    Personagem.inventario.escudo._itemNoMapa = false;
+                                break;
+                                case EnumItens.picareta:
+                                    Personagem.inventario.picareta._itemNoMapa = false;
+                                break;   
+                                case EnumItens.arco:
+                                    Personagem.inventario.arco._itemNoMapa = false;
+                                break;                                                         
+                            }
                         }
                         
                         acaoInimigo();
