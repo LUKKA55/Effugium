@@ -1,7 +1,7 @@
 **Task**
 - [Pendente] Arrumar Tentar Novamente clicando duas vezes.
 
-- [Pendente] Espada esta parando de spawnar (raramente), talvez tenha a ver com o spawn instantaneo.
+- [Pendente] Itens as vezes param de spawnar, aconteceu com arco e espada.
 
 ***Effugium***
 
