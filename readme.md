@@ -6,8 +6,11 @@
 ***Effugium***
 
 [Requisitos]
-- Tenha baixado dotnet.
-- Dotnet - https://dotnet.microsoft.com/pt-br/download
+- Dotnet  
+https://dotnet.microsoft.com/pt-br/download
+
+- Microsoft.NETCore.App&framework_version=6.0 
+https://aka.ms/dotnet-core-applaunch?framework=Microsoft.NETCore.App&framework_version=6.0.0&arch=x64&rid=win-x64&os=win10
 
 **Como Rodar o Jogo**
 
