@@ -39,7 +39,7 @@ namespace Effugium
                 } else {
                     _spawnInstantaneo = false;
                 }
-                List<List<int>> spawnsDisponiveis = _spawnsDisponiveis;
+                List<List<int>> spawnsDisponiveis = new (_spawnsDisponiveis);
 
                 int tentativasDeSpawn = spawnsDisponiveis.Count;
 
