@@ -2,6 +2,22 @@ namespace Effugium
 {
     class InformacoesDebug {
         public Inventario inventario = new();
+        public FaseStatus faseAtual = new FaseStatus(
+            new string[13,20],
+            Game.FaseAtual._escudo,
+            Game.FaseAtual._picareta,
+            Game.FaseAtual._arco,
+            Game.FaseAtual._modoJogo,
+            Game.FaseAtual._qntInimigosTipo1, 
+            Game.FaseAtual._qntInimigosTipo2, 
+            Game.FaseAtual._qntInimigosTipo3,
+            Game.FaseAtual._qntInimigosTipo4,
+            Game.FaseAtual._qntInimigosTipo5,
+            Game.FaseAtual._qntInimigosTipo6,
+            Game.FaseAtual._qntInimigosTipo7,
+            Game.FaseAtual._qntInimigosTipo8,
+            Game.FaseAtual._qntInimigosTipo9
+        );
         public bool telaGameOver = Game.telaGameOver;
         public InformacoesDebug() {
             ModeloBaseItem[] itensPersonagem = new ModeloBaseItem[]{
@@ -31,11 +47,28 @@ namespace Effugium
             inventario.escudo._equipado = Personagem.inventario.escudo._equipado;
             inventario.picareta._equipado = Personagem.inventario.picareta._equipado;
             inventario.arco._equipado = Personagem.inventario.arco._equipado;
+
+            Array.Copy(Game.FaseAtual._mapa, faseAtual._mapa, Game.FaseAtual._mapa.Length);
         }
 
         public void MostrarDebugLog() {
             Console.Clear();
             Console.WriteLine($"telaGameOver: {telaGameOver}");
+            Console.WriteLine("Mapa Atual:");
+            Console.WriteLine($"_espada: {Game.FaseAtual._espada}");
+            Console.WriteLine($"_escudo: {Game.FaseAtual._escudo}");
+            Console.WriteLine($"_picareta: {Game.FaseAtual._picareta}");
+            Console.WriteLine($"_arco: {Game.FaseAtual._arco}");
+            Console.WriteLine($"_modoJogo: {Game.FaseAtual._modoJogo}");
+            Console.WriteLine($"qntInimigosTipo1: {Game.FaseAtual._qntInimigosTipo1}"); 
+            Console.WriteLine($"qntInimigosTipo2: {Game.FaseAtual._qntInimigosTipo2}"); 
+            Console.WriteLine($"qntInimigosTipo3: {Game.FaseAtual._qntInimigosTipo3}");
+            Console.WriteLine($"qntInimigosTipo4: {Game.FaseAtual._qntInimigosTipo4}");
+            Console.WriteLine($"qntInimigosTipo5: {Game.FaseAtual._qntInimigosTipo5}");
+            Console.WriteLine($"qntInimigosTipo6: {Game.FaseAtual._qntInimigosTipo6}");
+            Console.WriteLine($"qntInimigosTipo7: {Game.FaseAtual._qntInimigosTipo7}");
+            Console.WriteLine($"qntInimigosTipo8: {Game.FaseAtual._qntInimigosTipo8}");
+            Console.WriteLine($"qntInimigosTipo9: {Game.FaseAtual._qntInimigosTipo9}");
             Console.WriteLine("Inventario:");
             ModeloBaseItem[] itensDebug = new ModeloBaseItem[]{
                inventario.espada,
