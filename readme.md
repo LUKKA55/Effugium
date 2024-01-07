@@ -1,7 +1,8 @@
 **Task**
 - [Pendente] Arrumar Tentar Novamente clicando duas vezes.
 
-- [Pendente] Itens as vezes param de spawnar, aconteceu com arco e espada.
+- [Pendente] BUG de tela de morte causada por morte duplicada persiste!.
+- [Pendente] FASE 17 não acaba mesmo todos os inimigos morrendo.
 
 ***Effugium***
 
