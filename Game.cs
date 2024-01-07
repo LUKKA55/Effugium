@@ -69,6 +69,8 @@
         public static void Vitoria() {
             Mapa.CheckMapaIsRenderizando();
             MostrarMensagem.Win();
+            if (DB.informacoesDebug != null)
+                DB.informacoesDebug.MostrarDebugLog();
             Environment.Exit(0);
         }
 
@@ -111,6 +113,8 @@
                             break;
                         case enumOpcoesGameOver.Sair:
                             MostrarMensagem.Exit();
+                            if (DB.informacoesDebug != null)
+                                DB.informacoesDebug.MostrarDebugLog();
                             Environment.Exit(0);
                             break;
                     }
@@ -204,11 +208,16 @@
                     if(key.Key == ConsoleKey.D || key.Key == ConsoleKey.RightArrow){
                         Personagem.Movimentacao(enumDirecao.Direita);
                     }
+                    if(key.Key == ConsoleKey.F12){
+                        DB.informacoesDebug = new();
+                    }
                     if(char.IsDigit(key.KeyChar)){
                         Personagem.inventario.UsarItem(key.KeyChar);
                     }
                     if (key.Key == ConsoleKey.X){
                         MostrarMensagem.Exit();
+                        if (DB.informacoesDebug != null)
+                            DB.informacoesDebug.MostrarDebugLog();
                         Environment.Exit(0);
                     }
                 }while ((faseAtual == nivelFase || pararRenderizacoes) && faseNaoMudou);

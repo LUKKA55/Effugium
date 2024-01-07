@@ -558,6 +558,7 @@ namespace Effugium
         public static List<string> inimigosEvolutivos = new(){"çç", "¢¢", "$$", "§§"};
         public static List<string> modelosFlechas = new(){ " i", " !", "--" }; 
         public static Inventario backupInventario = new();
+        public static InformacoesDebug informacoesDebug = null;
     }
 }
 
