@@ -65,8 +65,17 @@ namespace Effugium
                 Console.WriteLine($"_quantidade: {itensDebug[idx]._quantidade}");
                 Console.WriteLine($"_spawnando: {itensDebug[idx]._spawnando}");
                 Console.WriteLine($"_spawnInstantaneo: {itensDebug[idx]._spawnInstantaneo}");
-                string spawnsDisponiveis = string.Join("-", itensDebug[idx]._spawnsDisponiveis);
-                Console.WriteLine($"_spawnsDisponiveis: {spawnsDisponiveis}");
+                string spawnsDisponiveisDisplay = "";
+                for(
+                    int idxSpawn = 0; 
+                    idxSpawn < itensDebug[idx]._spawnsDisponiveis.Count;
+                    idxSpawn++
+                ) {
+                   spawnsDisponiveisDisplay += $"{itensDebug[idx]._spawnsDisponiveis[idxSpawn][0]} : {itensDebug[idx]._spawnsDisponiveis[idxSpawn][1]}";
+                    if (idxSpawn < itensDebug[idx]._spawnsDisponiveis.Count - 1)
+                        spawnsDisponiveisDisplay += " || ";    
+                }
+                Console.WriteLine($"_spawnsDisponiveis: {spawnsDisponiveisDisplay}");
             }
         }
     }
