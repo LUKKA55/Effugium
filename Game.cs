@@ -118,12 +118,12 @@
                             Environment.Exit(0);
                             break;
                     }
-                    ProximaFase();
                     faseNaoMudou = false;
                     respostaJaFoiEscolhida = true;
                 }
             }while (!respostaJaFoiEscolhida);
             telaGameOver = false;
+            ProximaFase();
         }
 
         public static void Main() {
