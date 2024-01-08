@@ -3,6 +3,8 @@
 
 - [Pendente] FASE 17 não acaba mesmo todos os inimigos morrendo.
 
+-[Pendente] Quando está no load, se clicar alguma tecla quebra.
+
 ***Effugium***
 
 [Requisitos]
