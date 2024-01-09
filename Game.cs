@@ -160,35 +160,37 @@
                 int faseAtual = nivelFase;
                 faseNaoMudou = true;
 
-                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo1 > 0) 
-                    Inimigos.IntervaloMovimentoInimigo();
+                if (nivelFase != -1) {
+                    if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo1 > 0) 
+                        Inimigos.IntervaloMovimentoInimigo();
 
-                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo2 > 0) 
-                    Inimigos.IntervaloMovimentoInimigo2();
+                    if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo2 > 0) 
+                        Inimigos.IntervaloMovimentoInimigo2();
 
-                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo3 > 0) 
-                    Inimigos.IntervaloMovimentoInimigo3();
+                    if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo3 > 0) 
+                        Inimigos.IntervaloMovimentoInimigo3();
 
-                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo4 > 0) 
-                    Inimigos.IntervaloMovimentoInimigo4();
+                    if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo4 > 0) 
+                        Inimigos.IntervaloMovimentoInimigo4();
 
-                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo5 > 0)  
-                    Inimigos.IntervaloMovimentoInimigo5();
+                    if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo5 > 0)  
+                        Inimigos.IntervaloMovimentoInimigo5();
 
-                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo6 > 0)  
-                    Inimigos.IntervaloMovimentoInimigo6();
+                    if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo6 > 0)  
+                        Inimigos.IntervaloMovimentoInimigo6();
 
-                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo7 > 0)  
-                    Inimigos.IntervaloMovimentoInimigo7();
+                    if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo7 > 0)  
+                        Inimigos.IntervaloMovimentoInimigo7();
 
-                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo8 > 0)  
-                    Inimigos.IntervaloMovimentoInimigo8();
+                    if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo8 > 0)  
+                        Inimigos.IntervaloMovimentoInimigo8();
 
-                if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo9 > 0)  
-                    Inimigos.IntervaloMovimentoInimigo9();
+                    if (DB.fases.ElementAt(nivelFase)._qntInimigosTipo9 > 0)  
+                        Inimigos.IntervaloMovimentoInimigo9();
 
-                Mapa.ResetaSpawnsItensDoMapa();
-                Mapa.CheckMapaIsRenderizando();
+                    Mapa.ResetaSpawnsItensDoMapa();
+                    Mapa.CheckMapaIsRenderizando();
+                }
                 
                 do{
                     key = Console.ReadKey();
